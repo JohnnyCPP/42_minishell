@@ -1,0 +1,44 @@
+[x]	STEP 0: core loop & signals
+[ ]	This functionality is covered by unit tests
+
+- Use readline() to make a REPL
+- Signal handling
+- Global variable for signals
+  - "volatile sig_atomic_t g_signal"
+
+[ ]	STEP 1: tokenization & command execution
+[ ]	This functionality is covered by unit tests
+
+- Split input into space-delimited strings, respect quotes
+- Handle ' and "
+- Built-ins
+  - exit
+  - echo
+  - env
+  - pwd
+  - cd
+  - export
+  - unset
+- Search PATH for executables
+- System commands
+
+[ ]	STEP 2: redirections & heredoc
+[ ]	This functionality is covered by unit tests
+
+- Use open(), dup2(), close() to redirect stdin/stdout
+- Implement heredoc (<<)
+
+[ ]	STEP 3: pipes
+[ ]	This functionality is covered by unit tests
+
+- Use pipe() & fork() for each command
+- Connect stdout of one process to stdin of the next
+- Loop through commands for multi-pipe handling
+
+[ ]	STEP 4: variables & quoting
+[ ]	This functionality is covered by unit tests
+
+- Expand environment variables ($PATH) using getenv()
+- Update $? (exit status) after each command
+- Ensure ' ignores variable expansion (e.g. $PATH)
+- Allow variable expansion between "

@@ -1,0 +1,62 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-I",
+      "./include/",
+      "-I",
+      "./src/lib/libft/include/",
+      "-c",
+      "-o",
+      "object/main.o",
+      "src/main.c"
+    ],
+    "directory": "/mnt/nvme0n1p1/Home/Development/minishell",
+    "file": "/mnt/nvme0n1p1/Home/Development/minishell/src/main.c",
+    "output": "/mnt/nvme0n1p1/Home/Development/minishell/object/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-I",
+      "./include/",
+      "-I",
+      "./src/lib/libft/include/",
+      "-c",
+      "-o",
+      "object/signal.o",
+      "src/signal.c"
+    ],
+    "directory": "/mnt/nvme0n1p1/Home/Development/minishell",
+    "file": "/mnt/nvme0n1p1/Home/Development/minishell/src/signal.c",
+    "output": "/mnt/nvme0n1p1/Home/Development/minishell/object/signal.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-I",
+      "./include/",
+      "-I",
+      "./src/lib/libft/include/",
+      "-c",
+      "-o",
+      "object/repl.o",
+      "src/repl.c"
+    ],
+    "directory": "/mnt/nvme0n1p1/Home/Development/minishell",
+    "file": "/mnt/nvme0n1p1/Home/Development/minishell/src/repl.c",
+    "output": "/mnt/nvme0n1p1/Home/Development/minishell/object/repl.o"
+  }
+]
