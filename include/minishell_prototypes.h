@@ -22,7 +22,7 @@ void	ms_print_tokens(t_token_list *list);
   *
   * @param sig Value of SIGINT signal, updates g_signal.
  */
-void	ms_handle_sigint(int sig);
+void	ms_handle_sigint(int signal);
 
 /**
   * @brief Sets a handler for SIGINT and ignores SIGQUIT signals.

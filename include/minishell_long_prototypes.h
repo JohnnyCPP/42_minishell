@@ -15,6 +15,20 @@
 # include "minishell_structures.h"
 
 /**
+  * @brief Gets the current signal value.
+  *
+  * @return The current value of the signal received.
+  */
+sig_atomic_t	ms_get_signal(void);
+
+/**
+  * @brief Updates the signal value.
+  *
+  * @param signal The new value to be set.
+  */
+void			ms_set_signal(sig_atomic_t signal);
+
+/**
   * @brief Initializes an empty list of tokens.
   *
   * @return If success, returns a dynamically allocated list of tokens

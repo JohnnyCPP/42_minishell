@@ -11,12 +11,24 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-void	ms_handle_sigint(int sig)
+static volatile sig_atomic_t	g_signal;
+
+sig_atomic_t	ms_get_signal(void)
+{
+	return (g_signal);
+}
+
+void	ms_set_signal(sig_atomic_t signal)
+{
+	g_signal = signal;
+}
+
+void	ms_handle_sigint(int signal)
 {
 	char	*newline;
 
 	newline = "\n";
-	g_signal = sig;
+	ms_set_signal(signal);
 	write(STDOUT_FILENO, newline, ft_strlen(newline));
 	if (rl_on_new_line() == FAIL)
 		write(STDOUT_FILENO, ERR_ON_NL, ft_strlen(ERR_ON_NL));
@@ -28,7 +40,7 @@ void	ms_configure_signals(void)
 {
 	struct sigaction	sa_sigint;
 
-	g_signal = 0;
+	ms_set_signal(0);
 	sa_sigint.sa_handler = ms_handle_sigint;
 	sigemptyset(&sa_sigint.sa_mask);
 	sa_sigint.sa_flags = SA_RESTART;

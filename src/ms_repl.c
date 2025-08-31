@@ -41,14 +41,14 @@ void	ms_read_loop(void)
 
 	while (TRUE)
 	{
-		g_signal = 0;
+		ms_set_signal(0);
 		input = readline(PROMPT);
 		if (!input)
 		{
 			ms_exitshell();
 			break ;
 		}
-		if (g_signal == SIGINT)
+		if (ms_get_signal() == SIGINT)
 		{
 			free(input);
 			continue ;

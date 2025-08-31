@@ -25,6 +25,4 @@
 # include "minishell_prototypes.h"
 # include "minishell_long_prototypes.h"
 
-extern volatile sig_atomic_t	g_signal;
-
 #endif

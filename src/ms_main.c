@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-volatile sig_atomic_t	g_signal;
-
 int	main(void)
 {
 	ms_configure_signals();
