@@ -183,12 +183,25 @@ int		ms_analyze_pipe(t_token_list *list);
 void	ms_strip_quotes(t_token_list *list);
 
 /**
-  * @brief TODO
+  * @brief Gets the length of a variable expansion tag.
+  *
+  * @param lexeme Position where the '$' is
+  *
+  * @return Length of variable expansion tag
+  *
+  * If the variable expansion contains braces, includes them
+  * E.g. ${PATH} returns 7
   */
 int		ms_get_var_len(const char *lexeme);
 
 /**
-  * @brief TODO
+  * @brief Gets the content of an environment variable
+  *
+  * @param var_name Name of the variable
+  *
+  * @return Pointer to the variable
+  *
+  * The returned string is dynamically allocated and must be freed.
   */
 char	*ms_get_var_value(char *var_name);
 
