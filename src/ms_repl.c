@@ -30,6 +30,7 @@ static	void	ms_evaluate(const char *input)
 		ms_delete_list(&list);
 		return ;
 	}
+	ms_strip_quotes(list);
 	ms_print_tokens(list);
 	ms_delete_list(&list);
 }

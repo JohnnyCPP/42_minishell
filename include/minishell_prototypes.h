@@ -168,4 +168,28 @@ size_t	ms_analyze_redirection(const char *input, t_token_list *list);
   */
 int		ms_analyze_pipe(t_token_list *list);
 
+/**
+  * @brief If lexemes are quoted, removes them
+  *
+  * @param list Object whose lexemes will be modified
+  * 
+  * This function iterates through all tokens, 
+  * gets those that are of type word, 
+  * and if their lexemes are single or double quoted, 
+  * removes them.
+  *
+  * It also identifies single quoted tokens for variable expansion.
+  */
+void	ms_strip_quotes(t_token_list *list);
+
+/**
+  * @brief TODO
+  */
+int		ms_get_var_len(const char *lexeme);
+
+/**
+  * @brief TODO
+  */
+char	*ms_get_var_value(char *var_name);
+
 #endif

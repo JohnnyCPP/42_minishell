@@ -37,13 +37,13 @@ static	char	*ft_allocate(const char *string, int start, int length)
 
 char	*ft_substr(const char *string, unsigned int start, size_t length)
 {
-	char	*pointer;
+	char	*sub;
 
 	if (!string)
 		return ((void *) 0);
-	pointer = ft_allocate(string, start, (int) length);
-	if (pointer == 0)
+	sub = ft_allocate(string, (int) start, (int) length);
+	if (sub == 0)
 		return ((void *) 0);
-	ft_copy(pointer, string, start, (int) length);
-	return (pointer);
+	ft_copy(sub, string, (int) start, (int) length);
+	return (sub);
 }

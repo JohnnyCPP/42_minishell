@@ -507,17 +507,17 @@ char	*ft_substr(const char *string, unsigned int start, size_t length);
 /**
  * @brief Joins two strings into a new allocated string.
  *
- * @param string The first string.
- * @param to_join The string to append to the first string.
+ * @param dest The first string.
+ * @param src The string to append to the first string.
  *
- * @return A pointer to the allocated string containing both "string" 
- *         and "to_join", or NULL if memory allocation fails or 
+ * @return A pointer to the allocated string containing both "dest" 
+ *         and "src", or NULL if memory allocation fails or 
  *         any of the inputs is NULL.
  *
- * This function concatenates the contents of "string" followed by "to_join" 
+ * This function concatenates the contents of "dest" followed by "src" 
  * into a newly allocated string.
  */
-char	*ft_strjoin(const char *string, const char *to_join);
+char	*ft_strjoin(const char *dest, const char *src);
 
 /**
  * @brief Trims leading and trailing characters from a string.

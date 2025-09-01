@@ -34,6 +34,7 @@ t_token	*ms_create_token(t_token_type type, char *lexeme)
 	if (!token)
 		return (NULL);
 	token->type = type;
+	token->is_singleq = FALSE;
 	token->lexeme = lexeme;
 	token->next = NULL;
 	return (token);

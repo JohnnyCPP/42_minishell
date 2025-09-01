@@ -102,7 +102,10 @@ LEX_SRC_FILES	= ms_char.c \
 				  ms_get_tokens.c \
 				  ms_lexical_analysis.c \
 				  ms_redirection_analysis.c
-TOKEN_SRC_FILES	= ms_token.c \
+TOKEN_SRC_FILES	= ms_get_var_len.c \
+				  ms_get_var_value.c \
+				  ms_strip_quotes.c \
+				  ms_token.c \
 				  ms_token_validation.c
 ROOT_SRCS		= $(addprefix ${SRC_PATH}, ${ROOT_SRC_FILES})
 LEX_SRCS		= $(addprefix ${LEX_PATH}, ${LEX_SRC_FILES})

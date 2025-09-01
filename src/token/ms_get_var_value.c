@@ -1,40 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_structures.h                             :+:      :+:    :+:   */
+/*   ms_get_var_value.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       cvicol <cvicol@student.42madrid.com>     +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:05:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/08/22 17:18:15 by cvicol           ###   ########.fr       */
+/*   Updated: 2025/04/29 23:05:34 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef MINISHELL_STRUCTURES_H
-# define MINISHELL_STRUCTURES_H
+#include "minishell.h"
 
-typedef enum e_token_type
+char	*ms_get_var_value(char *var_name)
 {
-	T_WORD,
-	T_PIPE,
-	T_REDIR_IN,
-	T_REDIR_OUT,
-	T_REDIR_APND,
-	T_HEREDOC
-}	t_token_type;
+	char	*name;
+	char	*value;
+	// TODO
+	int		exit_status = 0;
 
-typedef struct s_token
-{
-	t_token_type	type;
-	int				is_singleq;
-	char			*lexeme;
-	struct s_token	*next;
-}	t_token;
-
-typedef struct s_token_list
-{
-	t_token	*head;
-	t_token	*tail;
-	int		length;
-}	t_token_list;
-
-#endif
+	if (!ft_strncmp(var_name, "$?", 2))
+		return (ft_itoa(exit_status));
+	if (var_name[0] == '$' && var_name[1] == '{')
+	{
+		name = ft_substr(var_name, 2, ft_strlen(var_name) - 3);
+		value = getenv(name);
+		free(name);
+		if (value)
+			return (ft_strdup(value));
+		return (ft_strdup(""));
+	}
+	if (var_name[0] == '$')
+	{
+		value = getenv(var_name + 1);
+		if (value)
+			return (ft_strdup(value));
+		return (ft_strdup(""));
+	}
+	return (ft_strdup(""));
+}

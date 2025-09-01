@@ -11,20 +11,20 @@
 /* ************************************************************************** */
 #include "libft.h"
 
-char	*ft_strjoin(const char *string, const char *to_join)
+char	*ft_strjoin(const char *dest, const char *src)
 {
-	char	*pointer;
-	size_t	length;
-	size_t	join_length;
+	char	*strjoin;
+	size_t	dest_len;
+	size_t	src_len;
 
-	if (!string || !to_join)
-		return ((void *) 0);
-	length = ft_strlen(string);
-	join_length = ft_strlen(to_join);
-	pointer = (char *) ft_calloc(length + join_length, sizeof(char));
-	if (!pointer)
-		return ((void *) 0);
-	ft_memcpy(pointer, string, length);
-	ft_memcpy(pointer + length, to_join, join_length);
-	return (pointer);
+	if (!dest || !src)
+		return (NULL);
+	dest_len = ft_strlen(dest);
+	src_len = ft_strlen(src);
+	strjoin = (char *) ft_calloc(dest_len + src_len + 1, sizeof(char));
+	if (!strjoin)
+		return (NULL);
+	ft_memcpy(strjoin, dest, dest_len);
+	ft_memcpy(strjoin + dest_len, src, src_len);
+	return (strjoin);
 }

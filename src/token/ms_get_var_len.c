@@ -1,40 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_structures.h                             :+:      :+:    :+:   */
+/*   ms_get_var_len.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       cvicol <cvicol@student.42madrid.com>     +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:05:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/08/22 17:18:15 by cvicol           ###   ########.fr       */
+/*   Updated: 2025/04/29 23:05:34 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef MINISHELL_STRUCTURES_H
-# define MINISHELL_STRUCTURES_H
+#include "minishell.h"
 
-typedef enum e_token_type
+int	ms_get_var_len(const char *lexeme)
 {
-	T_WORD,
-	T_PIPE,
-	T_REDIR_IN,
-	T_REDIR_OUT,
-	T_REDIR_APND,
-	T_HEREDOC
-}	t_token_type;
+	int	len;
 
-typedef struct s_token
-{
-	t_token_type	type;
-	int				is_singleq;
-	char			*lexeme;
-	struct s_token	*next;
-}	t_token;
-
-typedef struct s_token_list
-{
-	t_token	*head;
-	t_token	*tail;
-	int		length;
-}	t_token_list;
-
-#endif
+	len = 0;
+	if (lexeme[0] == '$')
+	{
+		len ++;
+		if (lexeme[1] == '?')
+			return (2);
+		if (lexeme[1] == '{')
+		{
+			len ++;
+			while (lexeme[len] && lexeme[len] != '}')
+				len ++;
+			if (lexeme[len] == '}')
+				len ++;
+			return (len);
+		}
+		while (lexeme[len] && (ft_isalnum(lexeme[len]) || lexeme[len] == '_'))
+			len ++;
+	}
+	return (len);
+}
