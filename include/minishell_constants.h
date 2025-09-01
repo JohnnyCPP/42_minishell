@@ -21,11 +21,21 @@
 // notifies the user of a successful termination
 # define MSG_EXIT_SHELL "exit\n"
 
+// notifies the user about invalid tokens
+# define MSG_UNCL_QUOT "minishell: unclosed quotes in token: %s\n"
+
 // notifies the user that the shell is ready to accept input
 # define PROMPT "minishell> "
 
-// used for infinite loop
+// used for infinite loop and return values
 # define TRUE 1
+# define FALSE 0
+
+// when the repl iterates, sets signal value to zero
+# define SIGNAL_RESET 0
+
+// used for rl_replace_line() second parameter
+# define CLEAR_UNDO_LIST 1
 
 // used for functions whose return failure is -1 by convention
 # define FAIL -1

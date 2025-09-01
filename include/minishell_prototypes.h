@@ -73,9 +73,27 @@ void	ms_free_tokens(t_token_list *list);
 void	ms_delete_list(t_token_list **list);
 
 /**
+  * @brief Checks that all tokens in a list are considered valid
+  *
+  * @param list The token list to be checked
+  *
+  * @return TRUE if all tokens are valid
+  *         FALSE if one or more tokens are not valid
+  *
+  * It only checks tokens of type word.
+  *
+  * A token of type word is considered to be valid if:
+  *   - In case of containing quotes, they are balanced
+  */
+int		ms_are_tokens_valid(t_token_list *list);
+
+/**
   * @brief Checks if a character is a whitespace.
   *
   * @param C The character to be checked
+  *
+  * @return Non-zero value if the character is a whitespace
+  *         0 if the character is not a whitespace
   */
 int		ms_iswhitespace(const char c);
 
@@ -83,6 +101,9 @@ int		ms_iswhitespace(const char c);
   * @brief Checks if a character is a redirection.
   *
   * @param C The character to be checked
+  *
+  * @return Non-zero value if the character is a redirection
+  *         0 if the character is not a redirection
   */
 int		ms_isredirection(const char c);
 
@@ -90,6 +111,9 @@ int		ms_isredirection(const char c);
   * @brief Checks if a character is a separator.
   *
   * @param C The character to be checked
+  *
+  * @return Non-zero value if the character is a separator
+  *         0 if the character is not a separator
   *
   * A separator includes: whitespaces, redirections, and pipes.
   */
@@ -99,6 +123,9 @@ int		ms_isseparator(const char c);
   * @brief Checks if a string equals ">>".
   *
   * @param INPUT The string to be checked
+  *
+  * @return Non-zero value if the string equals ">>"
+  *         0 if the string is not equal to ">>"
   */
 int		ms_isappend(const char *input);
 
@@ -106,6 +133,9 @@ int		ms_isappend(const char *input);
   * @brief Checks if a string equals "<<".
   *
   * @param C The string to be checked
+  *
+  * @return Non-zero value if the string equals "<<"
+  *         0 if the string is not equal to "<<"
   */
 int		ms_isheredoc(const char *input);
 
@@ -114,6 +144,8 @@ int		ms_isheredoc(const char *input);
   *
   * @param INPUT String read from stdin that contains the tokens to analyze
   * @param list Where the new token will be pushed to
+  *
+  * @return Length of the analyzed word
   */
 int		ms_analyze_word(const char *input, t_token_list *list);
 
@@ -122,6 +154,8 @@ int		ms_analyze_word(const char *input, t_token_list *list);
   *
   * @param INPUT String read from stdin that contains the tokens to analyze
   * @param list Where the new token will be pushed to
+  *
+  * @return Length of the analyzed redirection
   */
 size_t	ms_analyze_redirection(const char *input, t_token_list *list);
 
@@ -129,6 +163,8 @@ size_t	ms_analyze_redirection(const char *input, t_token_list *list);
   * @brief Creates a pipe token read from user input.
   *
   * @param list Where the new token will be pushed to
+  *
+  * @return Always 1
   */
 int		ms_analyze_pipe(t_token_list *list);
 

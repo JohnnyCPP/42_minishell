@@ -18,6 +18,7 @@ INC_PATH		= ./include/
 OBJ_PATH		= ./object/
 SRC_PATH	    = ./src/
 LEX_PATH		= ${SRC_PATH}lexical_analysis/
+TOKEN_PATH		= ${SRC_PATH}token/
 LIB_PATH		= ${SRC_PATH}lib/
 LIBFT_PATH		= ${LIB_PATH}libft/
 LIBFT_INC_PATH	= ${LIBFT_PATH}include/
@@ -96,15 +97,17 @@ RE_LIBFT		= ${MAKE_LIBFT} ${RE}
 ROOT_SRC_FILES	= debug.c \
 				  ms_main.c \
 				  ms_repl.c \
-				  ms_signal.c \
-				  ms_token.c
+				  ms_signal.c
 LEX_SRC_FILES	= ms_char.c \
 				  ms_get_tokens.c \
 				  ms_lexical_analysis.c \
 				  ms_redirection_analysis.c
+TOKEN_SRC_FILES	= ms_token.c \
+				  ms_token_validation.c
 ROOT_SRCS		= $(addprefix ${SRC_PATH}, ${ROOT_SRC_FILES})
 LEX_SRCS		= $(addprefix ${LEX_PATH}, ${LEX_SRC_FILES})
-SRC_FILES		= ${ROOT_SRCS} ${LEX_SRCS}
+TOKEN_SRCS		= $(addprefix ${TOKEN_PATH}, ${TOKEN_SRC_FILES})
+SRC_FILES		= ${ROOT_SRCS} ${LEX_SRCS} ${TOKEN_SRCS}
 # "patsubst": pattern substitution
 # parameters: pattern, replacement, text
 #

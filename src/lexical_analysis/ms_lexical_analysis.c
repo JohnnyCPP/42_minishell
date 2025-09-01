@@ -13,24 +13,24 @@
 
 static	int	ms_get_wordlen(const char *word)
 {
-	int	wordlen;
 	int	in_singleq;
 	int	in_doubleq;
+	int	i;
 
-	wordlen = 0;
-	in_singleq = 0;
-	in_doubleq = 0;
-	while (word[wordlen])
+	in_singleq = FALSE;
+	in_doubleq = FALSE;
+	i = 0;
+	while (word[i])
 	{
-		if (!in_doubleq && word[wordlen] == '\'')
+		if (!in_doubleq && word[i] == '\'')
 			in_singleq = !in_singleq;
-		else if (!in_singleq && word[wordlen] == '\"')
+		else if (!in_singleq && word[i] == '\"')
 			in_doubleq = !in_doubleq;
-		else if (!in_singleq && !in_doubleq && ms_isseparator(word[wordlen]))
+		else if (!in_singleq && !in_doubleq && ms_isseparator(word[i]))
 			break ;
-		wordlen ++;
+		i ++;
 	}
-	return (wordlen);
+	return (i);
 }
 
 int	ms_analyze_word(const char *input, t_token_list *list)
@@ -65,9 +65,8 @@ size_t	ms_analyze_redirection(const char *input, t_token_list *list)
 		return (ms_push_redir(list, T_HEREDOC, HEREDOC_STR));
 	else if (*input == '>')
 		return (ms_push_redir(list, T_REDIR_OUT, REDIROUT_STR));
-	else if (*input == '<')
+	else
 		return (ms_push_redir(list, T_REDIR_IN, REDIRIN_STR));
-	return (0);
 }
 
 int	ms_analyze_pipe(t_token_list *list)

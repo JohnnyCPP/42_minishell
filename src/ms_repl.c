@@ -25,6 +25,11 @@ static	void	ms_evaluate(const char *input)
 	list = ms_get_tokens(input);
 	if (!list)
 		return ;
+	if (!ms_are_tokens_valid(list))
+	{
+		ms_delete_list(&list);
+		return ;
+	}
 	ms_print_tokens(list);
 	ms_delete_list(&list);
 }
@@ -41,7 +46,7 @@ void	ms_read_loop(void)
 
 	while (TRUE)
 	{
-		ms_set_signal(0);
+		ms_set_signal(SIGNAL_RESET);
 		input = readline(PROMPT);
 		if (!input)
 		{
