@@ -46,4 +46,13 @@
 # define REDIROUT_STR ">"
 # define REDIRIN_STR "<"
 
+// define builtins
+# define CMD_CD "cd"
+# define CMD_ECHO "echo"
+# define CMD_ENV "env"
+# define CMD_EXIT "exit"
+# define CMD_EXPORT "export"
+# define CMD_PWD "pwd"
+# define CMD_UNSET "unset"
+
 #endif
