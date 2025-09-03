@@ -12,19 +12,29 @@
 #include "minishell.h"
 
 /**
- * TODO: 1. clear single and double quotes from tokens
- *       2. execution of built-in commands
- *       3. inspection of $PATH for command lookup
- *       4. execution of system commands
+ * TODO: 1. execution of built-in commands
+ *       2. inspection of $PATH for command lookup
+ *       3. execution of system commands
+ *       4. redirections and pipes
+ *       5. persist history
  */
+static	void	ms_run_command(t_token_list *list)
+{
+	int	exit_status;
+
+	(void) exit_status;
+	if (ms_is_builtin(list->head->lexeme))
+		exit_status = ms_run_builtin(list);
+}
+
 static	void	ms_evaluate(const char *input)
 {
 	t_token_list	*list;
 
-	add_history(input);
 	list = ms_get_tokens(input);
-	if (!list)
+	if (!list || !list->head)
 		return ;
+	add_history(input);
 	if (!ms_are_tokens_valid(list))
 	{
 		ms_delete_list(&list);
@@ -32,6 +42,7 @@ static	void	ms_evaluate(const char *input)
 	}
 	ms_strip_quotes(list);
 	ms_print_tokens(list);
+	ms_run_command(list);
 	ms_delete_list(&list);
 }
 

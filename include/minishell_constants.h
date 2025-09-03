@@ -55,4 +55,16 @@
 # define CMD_PWD "pwd"
 # define CMD_UNSET "unset"
 
+// used when running built-ins
+// defines the amount of built-in commands
+# define BUILTINS 7
+
+// standard return values for commands
+// 0 = success
+// 1 = general error
+// 2 = specific errors (e.g. cd with too many args)
+# define STD_RET_OK 0
+# define STD_RET_KO 1
+# define STD_RET_INCORRECT 2
+
 #endif

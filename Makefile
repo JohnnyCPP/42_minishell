@@ -21,6 +21,7 @@ LEX_PATH		= ${SRC_PATH}lexical_analysis/
 TOKEN_PATH		= ${SRC_PATH}token/
 LIB_PATH		= ${SRC_PATH}lib/
 SIGNAL_PATH		= ${SRC_PATH}signal/
+BUILTIN_PATH	= ${SRC_PATH}builtin/
 LIBFT_PATH		= ${LIB_PATH}libft/
 LIBFT_INC_PATH	= ${LIBFT_PATH}include/
 
@@ -107,13 +108,23 @@ TOKEN_SRC_FILES	= ms_get_var_len.c \
 				  ms_strip_quotes.c \
 				  ms_token.c \
 				  ms_token_validation.c
-SIGNAL_SRC_FILES	= ms_configure_signals.c \
-			  ms_g_signal.c
+SGNAL_SRC_FILES	= ms_configure_signals.c \
+				  ms_g_signal.c
+BLTIN_SRC_FILES	= ms_cd.c \
+				  ms_echo.c \
+				  ms_env.c \
+				  ms_exit.c \
+				  ms_export.c \
+				  ms_is_builtin.c \
+				  ms_pwd.c \
+				  ms_run_builtin.c \
+				  ms_unset.c
 ROOT_SRCS		= $(addprefix ${SRC_PATH}, ${ROOT_SRC_FILES})
 LEX_SRCS		= $(addprefix ${LEX_PATH}, ${LEX_SRC_FILES})
 TOKEN_SRCS		= $(addprefix ${TOKEN_PATH}, ${TOKEN_SRC_FILES})
-SIGNAL_SRCS		= $(addprefix ${SIGNAL_PATH}, ${SIGNAL_SRC_FILES})
-SRC_FILES		= ${ROOT_SRCS} ${LEX_SRCS} ${TOKEN_SRCS} ${SIGNAL_SRCS}
+SIGNAL_SRCS		= $(addprefix ${SIGNAL_PATH}, ${SGNAL_SRC_FILES})
+BUILTIN_SRCS	= $(addprefix ${BUILTIN_PATH}, ${BLTIN_SRC_FILES})
+SRC_FILES		= ${ROOT_SRCS} ${LEX_SRCS} ${TOKEN_SRCS} ${SIGNAL_SRCS} ${BUILTIN_SRCS}
 # "patsubst": pattern substitution
 # parameters: pattern, replacement, text
 #

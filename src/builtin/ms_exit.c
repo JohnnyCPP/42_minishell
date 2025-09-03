@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_is_builtin.c                                    :+:      :+:    :+:   */
+/*   ms_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       cvicol <cvicol@student.42madrid.com>     +#+#+#+#+#+   +#+           */
@@ -11,23 +11,13 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-int	ms_is_builtin(const char *lexeme)
+int	ms_exit(t_token_list *list)
 {
-	if (!lexeme)
-		return (FALSE);
-	if (!ft_strcmp(lexeme, CMD_CD))
-		return (TRUE);
-	if (!ft_strcmp(lexeme, CMD_ECHO))
-		return (TRUE);
-	if (!ft_strcmp(lexeme, CMD_ENV))
-		return (TRUE);
-	if (!ft_strcmp(lexeme, CMD_EXIT))
-		return (TRUE);
-	if (!ft_strcmp(lexeme, CMD_EXPORT))
-		return (TRUE);
-	if (!ft_strcmp(lexeme, CMD_PWD))
-		return (TRUE);
-	if (!ft_strcmp(lexeme, CMD_UNSET))
-		return (TRUE);
-	return (FALSE);
+	printf(MSG_EXIT_SHELL);
+	if (!list || !list->head)
+		exit(STD_RET_OK);
+	rl_clear_history();
+	ms_delete_list(&list);
+	exit(STD_RET_OK);
+	return (STD_RET_OK);
 }

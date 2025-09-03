@@ -205,4 +205,60 @@ int		ms_get_var_len(const char *lexeme);
   */
 char	*ms_get_var_value(char *var_name);
 
+/**
+  * @brief Checks if a lexeme is a built-in command
+  *
+  * @param lexeme The lexeme to be checked
+  *
+  * @return TRUE if it's a built-in, FALSE otherwise
+  */
+int		ms_is_builtin(const char *lexeme);
+
+/**
+  * @brief Runs a built-in command from a list of tokens
+  *
+  * @param list The list of tokens from which the command will be run
+  *
+  * @return The return status of the built-in run, 
+  *         or STD_RET_KO if the command does not run
+  */
+int		ms_run_builtin(t_token_list *list);
+
+/**
+  * @brief TODO
+  */
+int		ms_cd(t_token_list *list);
+
+/**
+  * @brief TODO
+  */
+int		ms_echo(t_token_list *list);
+
+/**
+  * @brief TODO
+  */
+int		ms_env(t_token_list *list);
+
+/**
+  * @brief Terminates minishell, it never returns
+  *
+  * @param list The token list that will be freed
+  */
+int		ms_exit(t_token_list *list);
+
+/**
+  * @brief TODO
+  */
+int		ms_export(t_token_list *list);
+
+/**
+  * @brief TODO
+  */
+int		ms_pwd(t_token_list *list);
+
+/**
+  * @brief TODO
+  */
+int		ms_unset(t_token_list *list);
+
 #endif
