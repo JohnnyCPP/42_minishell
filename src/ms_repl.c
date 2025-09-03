@@ -54,13 +54,16 @@ void	ms_read_loop(void)
 			ms_exitshell();
 			break ;
 		}
+		if (input[0] != '\0')
+		{
+			ms_evaluate(input);
+			continue ;
+		}
 		if (ms_get_signal() == SIGINT)
 		{
 			free(input);
 			continue ;
 		}
-		if (input[0] != '\0')
-			ms_evaluate(input);
 		free(input);
 	}
 }
