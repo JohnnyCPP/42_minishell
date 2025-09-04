@@ -26,13 +26,8 @@ void	ms_handle_sigint(int signal)
 
 void	ms_configure_signals(void)
 {
-	struct sigaction	sa_sigint;
-
 	ms_set_signal(SIGNAL_RESET);
-	sa_sigint.sa_handler = ms_handle_sigint;
-	sigemptyset(&sa_sigint.sa_mask);
-	sa_sigint.sa_flags = SA_RESTART;
-	if (sigaction(SIGINT, &sa_sigint, NULL) == FAIL)
+	if (signal(SIGINT, ms_handle_sigint) == SIG_ERR)
 		perror(ERR_SIGINT);
 	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
 		perror(ERR_SIGQUIT);
