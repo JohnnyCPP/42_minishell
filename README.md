@@ -9,4 +9,4 @@ The goal is to understand how a command-line interpreter works by implementing o
 
 > 42 Madrid is an academy for values, attitude and learning "hard and soft skills" in the digital environment.
 
-Developed by cvicol1 and JohnnyCPP.
+Developed by JohnnyCPP and tdaroca.

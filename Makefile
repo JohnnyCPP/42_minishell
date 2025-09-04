@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cvicol <cvicol@student.42madrid.com>       +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
+#    By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+         #
+#        tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 23:05:07 by jonnavar          #+#    #+#              #
-#    Updated: 2025/08/22 17:17:22 by cvicol           ###   ########.fr        #
+#    Updated: 2025/08/22 17:17:22 by jonnavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

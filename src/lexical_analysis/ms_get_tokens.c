@@ -4,9 +4,9 @@
 /*   ms_get_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
-/*       cvicol <cvicol@student.42madrid.com>     +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/15 01:02:01 by cvicol            #+#    #+#             */
-/*   Updated: 2025/08/22 17:39:30 by cvicol           ###   ########.fr       */
+/*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/15 01:02:01 by jonnavar          #+#    #+#             */
+/*   Updated: 2025/08/22 17:39:30 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"

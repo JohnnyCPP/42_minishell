@@ -3,12 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvicol <cvicol@student.42madrid.com>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:05:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/07/15 02:49:28 by cvicol           ###   ########.fr       */
+/*   Updated: 2025/07/15 02:49:28 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/**
+ * @file minishell.h
+ * @brief Contains function declarations for minishell.
+ *
+ * A minimalist Unix shell implementation written in C. 
+ * It replicates core features of Bash, including command execution, 
+ * pipes, redirections, environment variables, and signal handling.
+ *
+ * @author jonnavar & tdaroca
+ * @version koala-0.7
+ */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H

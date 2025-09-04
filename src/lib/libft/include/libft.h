@@ -4,7 +4,7 @@
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
-/*       cvicol <cvicol@student.42madrid.com>     +#+#+#+#+#+   +#+           */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:05:07 by jonnavar          #+#    #+#             */
 /*   Updated: 2025/04/29 23:05:34 by jonnavar         ###   ########.fr       */
 /*                                                                            */
@@ -17,7 +17,7 @@
  * The Libft is the low-level development of Standard C 
  * Library functions to leverage in the future.
  *
- * @author jonnavar & cvicol
+ * @author jonnavar
  * @version giraffe-alpaca-2.0
  */
 

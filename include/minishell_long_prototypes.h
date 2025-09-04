@@ -4,15 +4,16 @@
 /*   minishell_long_prototypes.h                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
-/*       cvicol <cvicol@student.42madrid.com>     +#+#+#+#+#+   +#+           */
+/*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:05:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/08/22 17:33:41 by cvicol           ###   ########.fr       */
+/*   Updated: 2025/08/22 17:33:41 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_LONG_PROTOTYPES_H
 # define MINISHELL_LONG_PROTOTYPES_H
 
 # include "minishell_structures.h"
+# include "signal.h"
 
 /**
   * @brief Gets the current signal value.
