@@ -11,8 +11,31 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-int	ms_env(t_token_list *list)
+static	int	ms_print_enverr(const char *lexeme)
 {
-	(void) list;
+	char	*error;
+
+	error = ms_concat(ERR_ENV, lexeme, "\n");
+	ms_puterr(error);
+	free(error);
+	return (STD_RET_INCORRECT);
+}
+
+int	ms_env(t_shell *shell)
+{
+	t_token_list	*tokens;
+	int				i;
+
+	tokens = shell->tokens;
+	if (tokens && tokens->head && tokens->head->next)
+		return (ms_print_enverr(tokens->head->next->lexeme));
+	if (!shell->env)
+		return (STD_RET_OK);
+	i = 0;
+	while (shell->env[i])
+	{
+		printf("%s\n", shell->env[i]);
+		i ++;
+	}
 	return (STD_RET_OK);
 }

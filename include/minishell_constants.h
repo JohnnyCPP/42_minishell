@@ -12,11 +12,18 @@
 #ifndef MINISHELL_CONSTANTS_H
 # define MINISHELL_CONSTANTS_H
 
-// application errors
+// application errors (write)
 # define ERR_ON_NL "Error: rl_on_new_line() returned -1\n"
-# define ERR_REP_LN "Error: rl_replace_line() returned 1\n"
-# define ERR_SIGINT "Sigaction (SIGINT)"
-# define ERR_SIGQUIT "Sigaction (SIGQUIT)"
+# define ERR_ENV "Error: unexpected token: "
+# define ERR_EXPORT_HEAD "Error: `"
+# define ERR_EXPORT_TAIL "': not a valid identifier\n"
+# define ERR_OLDPWD "Error: OLDPWD not set\n"
+# define ERR_HOME "Error: HOME not set\n"
+
+// application errors (perror)
+# define ERR_SIGINT "signal (SIGINT)"
+# define ERR_SIGQUIT "signal (SIGQUIT)"
+# define ERR_GETCWD "getcwd"
 
 // notifies the user of a successful termination
 # define MSG_EXIT_SHELL "exit\n"
@@ -55,10 +62,6 @@
 # define CMD_PWD "pwd"
 # define CMD_UNSET "unset"
 
-// used when running built-ins
-// defines the amount of built-in commands
-# define BUILTINS 7
-
 // standard return values for commands
 // 0 = success
 // 1 = general error
@@ -66,5 +69,17 @@
 # define STD_RET_OK 0
 # define STD_RET_KO 1
 # define STD_RET_INCORRECT 2
+
+// common environment variables
+# define EVAR_HOME "HOME"
+# define EVAR_OLDPWD "OLDPWD"
+# define EVAR_PWD "PWD"
+
+// used by cd to return to the previous path
+# define PREV_PATH "-"
+
+// used by export to print all environment variables
+# define EXPORT_FMT_NOVAL "declare -x %s\n"
+# define EXPORT_FMT "declare -x %s=\"%s\"\n"
 
 #endif

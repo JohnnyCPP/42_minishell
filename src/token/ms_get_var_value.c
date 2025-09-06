@@ -11,19 +11,17 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-char	*ms_get_var_value(char *var_name)
+char	*ms_get_var_value(char *var_name, t_shell *shell)
 {
 	char	*name;
 	char	*value;
-	// TODO
-	int		exit_status = 0;
 
 	if (!ft_strncmp(var_name, "$?", 2))
-		return (ft_itoa(exit_status));
+		return (ft_itoa(shell->exit_code));
 	if (var_name[0] == '$' && var_name[1] == '{')
 	{
 		name = ft_substr(var_name, 2, ft_strlen(var_name) - 3);
-		value = getenv(name);
+		value = ms_get_var(shell, name);
 		free(name);
 		if (value)
 			return (ft_strdup(value));
@@ -31,7 +29,7 @@ char	*ms_get_var_value(char *var_name)
 	}
 	if (var_name[0] == '$')
 	{
-		value = getenv(var_name + 1);
+		value = ms_get_var(shell, var_name + 1);
 		if (value)
 			return (ft_strdup(value));
 		return (ft_strdup(""));

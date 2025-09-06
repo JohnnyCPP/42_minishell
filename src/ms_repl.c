@@ -12,38 +12,38 @@
 #include "minishell.h"
 
 /**
- * TODO: 1. execution of built-in commands
- *       2. inspection of $PATH for command lookup
- *       3. execution of system commands
+ * TODO: 1. inspection of $PATH for command lookup
+ *       2. execution of system commands
+ *       3. persist history
  *       4. redirections and pipes
- *       5. persist history
  */
-static	void	ms_run_command(t_token_list *list)
+static	void	ms_run_command(t_shell *shell)
 {
-	int	exit_status;
+	char	*lexeme;
 
-	(void) exit_status;
-	if (ms_is_builtin(list->head->lexeme))
-		exit_status = ms_run_builtin(list);
+	lexeme = shell->tokens->head->lexeme;
+	if (ms_is_builtin(lexeme))
+		shell->exit_code = ms_run_builtin(shell, lexeme);
+	else
+		shell->exit_code = ms_run_external(shell, lexeme);
 }
 
-static	void	ms_evaluate(const char *input)
+static	void	ms_evaluate(t_shell *shell)
 {
-	t_token_list	*list;
-
-	list = ms_get_tokens(input);
-	if (!list || !list->head)
+	if (!shell)
 		return ;
-	add_history(input);
-	if (!ms_are_tokens_valid(list))
+	shell->tokens = ms_get_tokens(shell->input);
+	if (!shell->tokens || !shell->tokens->head)
+		return ;
+	add_history(shell->input);
+	if (!ms_are_tokens_valid(shell->tokens))
 	{
-		ms_delete_list(&list);
+		ms_delete_tokens(&shell->tokens);
 		return ;
 	}
-	ms_strip_quotes(list);
-	ms_print_tokens(list);
-	ms_run_command(list);
-	ms_delete_list(&list);
+	ms_strip_quotes(shell);
+	ms_run_command(shell);
+	ms_delete_tokens(&shell->tokens);
 }
 
 static	void	ms_exitshell(void)
@@ -52,29 +52,27 @@ static	void	ms_exitshell(void)
 	printf(MSG_EXIT_SHELL);
 }
 
-void	ms_read_loop(void)
+void	ms_read_loop(t_shell *shell)
 {
-	char	*input;
-
 	while (TRUE)
 	{
 		ms_set_signal(SIGNAL_RESET);
-		input = readline(PROMPT);
-		if (!input)
+		shell->input = readline(PROMPT);
+		if (!shell->input)
 		{
 			ms_exitshell();
 			break ;
 		}
-		if (input[0] != '\0')
+		if (shell->input[0] != '\0')
 		{
-			ms_evaluate(input);
+			ms_evaluate(shell);
 			continue ;
 		}
 		if (ms_get_signal() == SIGINT)
 		{
-			free(input);
+			free(shell->input);
 			continue ;
 		}
-		free(input);
+		free(shell->input);
 	}
 }

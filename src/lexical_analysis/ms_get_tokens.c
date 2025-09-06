@@ -11,18 +11,13 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-// TODO:
-// int is_builtin(char *cmd)
-// void execute_builtin(t_list *tokens)
-// void execute_external(t_list *tokens)
-
 t_token_list	*ms_get_tokens(const char *input)
 {
-	t_token_list	*list;
+	t_token_list	*tokens;
 	int				i;
 
-	list = ms_create_token_list();
-	if (!list || !input)
+	tokens = ms_create_token_list();
+	if (!tokens || !input)
 		return (NULL);
 	i = 0;
 	while (input[i])
@@ -30,11 +25,11 @@ t_token_list	*ms_get_tokens(const char *input)
 		if (ms_iswhitespace(input[i]))
 			i ++;
 		else if (input[i] == '|')
-			i += ms_analyze_pipe(list);
+			i += ms_analyze_pipe(tokens);
 		else if (ms_isredirection(input[i]))
-			i += (int) ms_analyze_redirection(&input[i], list);
+			i += (int) ms_analyze_redirection(&input[i], tokens);
 		else
-			i += ms_analyze_word(&input[i], list);
+			i += ms_analyze_word(&input[i], tokens);
 	}
-	return (list);
+	return (tokens);
 }

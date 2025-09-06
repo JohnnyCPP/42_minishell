@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_unset.c                                         :+:      :+:    :+:   */
+/*   ms_init_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
@@ -11,35 +11,38 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-static	int	ms_print_unseterr(const char *arg)
+static	char	**ms_copy_env(char **env)
 {
-	char	*error;
+	char	**copy;
+	int		i;
 
-	error = ms_concat(ERR_EXPORT_HEAD, arg, ERR_EXPORT_TAIL);
-	ms_puterr(error);
-	free(error);
-	return (EXIT_FAILURE);
+	i = 0;
+	while (env[i])
+		i ++;
+	copy = (char **) ft_calloc(i + 1, sizeof(char *));
+	if (!copy)
+		return (NULL);
+	i = 0;
+	while (env[i])
+	{
+		copy[i] = ft_strdup(env[i]);
+		if (!copy[i])
+		{
+			while (i -- > 0)
+				free(copy[i]);
+			free((void *) copy);
+			return (NULL);
+		}
+		i ++;
+	}
+	copy[i] = NULL;
+	return (copy);
 }
 
-int	ms_unset(t_shell *shell)
+void	ms_init_env(t_shell *shell, char **env)
 {
-	t_token	*current;
-	int		exit_code;
-
-	if (!shell->tokens->head->next)
-		return (STD_RET_OK);
-	current = shell->tokens->head->next;
-	exit_code = STD_RET_OK;
-	while (current)
-	{
-		if (!ms_is_validenv(current->lexeme))
-		{
-			ms_print_unseterr(current->lexeme);
-			exit_code = STD_RET_KO;
-		}
-		else
-			ms_unset_var(shell, current->lexeme);
-		current = current->next;
-	}
-	return (exit_code);
+	if (env && *env)
+		shell->env = ms_copy_env(env);
+	else
+		shell->env = (char **) ft_calloc(1, sizeof(char *));
 }

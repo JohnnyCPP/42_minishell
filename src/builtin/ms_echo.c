@@ -11,8 +11,42 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-int	ms_echo(t_token_list *list)
+static	void	ms_echo_tokens(t_token *current, int skip_newline)
 {
-	(void) list;
+	if (current && skip_newline)
+		current = current->next;
+	while (current)
+	{
+		printf("%s", current->lexeme);
+		current = current->next;
+		if (current)
+			printf(" ");
+	}
+}
+
+static	int	ms_is_nlflag(const char *lexeme)
+{
+	if (!ft_strcmp(lexeme, "-n"))
+		return (TRUE);
+	return (FALSE);
+}
+
+int	ms_echo(t_shell *shell)
+{
+	t_token	*current;
+	int		skip_newline;
+
+	if (!shell->tokens || !shell->tokens->head)
+		return (STD_RET_OK);
+	current = shell->tokens->head->next;
+	if (!current)
+	{
+		printf("\n");
+		return (STD_RET_OK);
+	}
+	skip_newline = ms_is_nlflag(current->lexeme);
+	ms_echo_tokens(current, skip_newline);
+	if (!skip_newline)
+		printf("\n");
 	return (STD_RET_OK);
 }

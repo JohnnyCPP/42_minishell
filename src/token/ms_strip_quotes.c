@@ -24,7 +24,7 @@ static	int	ms_append(char **result, const char current)
 	return (1);
 }
 
-static	int	ms_expand(char **result, const char *lexeme)
+static	int	ms_expand(char **result, const char *lexeme, t_shell *shell)
 {
 	int		var_len;
 	char	*var_name;
@@ -35,7 +35,7 @@ static	int	ms_expand(char **result, const char *lexeme)
 	if (!var_len)
 		return (ms_append(result, '$'));
 	var_name = ft_substr(lexeme, 0, var_len);
-	var_value = ms_get_var_value(var_name);
+	var_value = ms_get_var_value(var_name, shell);
 	free(var_name);
 	strjoin = ft_strjoin(*result, var_value);
 	free(*result);
@@ -44,15 +44,15 @@ static	int	ms_expand(char **result, const char *lexeme)
 	return (var_len);
 }
 
-static	int	ms_expand_or_append(int in_singleq, char **res, const char *lexeme)
+static	int	ms_expand_or_append(int sq, char **res, const char *lx, t_shell *sh)
 {
-	if (!in_singleq && lexeme[0] == '$')
-		return (ms_expand(res, lexeme));
+	if (!sq && lx[0] == '$')
+		return (ms_expand(res, lx, sh));
 	else
-		return (ms_append(res, lexeme[0]));
+		return (ms_append(res, lx[0]));
 }
 
-static	char	*ms_process_sequentially(const char *lexeme)
+static	char	*ms_process_sequentially(const char *lexeme, t_shell *shell)
 {
 	char	*result;
 	int		in_singleq;
@@ -76,22 +76,22 @@ static	char	*ms_process_sequentially(const char *lexeme)
 			i ++;
 		}
 		else
-			i += ms_expand_or_append(in_singleq, &result, &lexeme[i]);
+			i += ms_expand_or_append(in_singleq, &result, &lexeme[i], shell);
 	}
 	return (result);
 }
 
-void	ms_strip_quotes(t_token_list *list)
+void	ms_strip_quotes(t_shell *shell)
 {
 	t_token	*current;
 	char	*new_lexeme;
 
-	current = list->head;
+	current = shell->tokens->head;
 	while (current)
 	{
 		if (current->type == T_WORD && current->lexeme)
 		{
-			new_lexeme = ms_process_sequentially(current->lexeme);
+			new_lexeme = ms_process_sequentially(current->lexeme, shell);
 			free(current->lexeme);
 			current->lexeme = new_lexeme;
 		}

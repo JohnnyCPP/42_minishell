@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_unset.c                                         :+:      :+:    :+:   */
+/*   ms_is_validenv.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
@@ -11,35 +11,20 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-static	int	ms_print_unseterr(const char *arg)
+int	ms_is_validenv(const char *name)
 {
-	char	*error;
+	int	i;
 
-	error = ms_concat(ERR_EXPORT_HEAD, arg, ERR_EXPORT_TAIL);
-	ms_puterr(error);
-	free(error);
-	return (EXIT_FAILURE);
-}
-
-int	ms_unset(t_shell *shell)
-{
-	t_token	*current;
-	int		exit_code;
-
-	if (!shell->tokens->head->next)
-		return (STD_RET_OK);
-	current = shell->tokens->head->next;
-	exit_code = STD_RET_OK;
-	while (current)
+	if (!name || !*name)
+		return (FALSE);
+	if (!(ft_isalpha(*name) || *name == '_'))
+		return (FALSE);
+	i = 1;
+	while (name[i])
 	{
-		if (!ms_is_validenv(current->lexeme))
-		{
-			ms_print_unseterr(current->lexeme);
-			exit_code = STD_RET_KO;
-		}
-		else
-			ms_unset_var(shell, current->lexeme);
-		current = current->next;
+		if (!(ft_isalnum(name[i]) || name[i] == '_'))
+			return (FALSE);
+		i ++;
 	}
-	return (exit_code);
+	return (TRUE);
 }

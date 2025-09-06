@@ -37,4 +37,12 @@ typedef struct s_token_list
 	int		length;
 }	t_token_list;
 
+typedef struct s_shell
+{
+	int				exit_code;
+	char			*input;
+	char			**env;
+	t_token_list	*tokens;
+}	t_shell;
+
 #endif

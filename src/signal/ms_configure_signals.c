@@ -19,7 +19,7 @@ void	ms_handle_sigint(int signal)
 	ms_set_signal(signal);
 	write(STDOUT_FILENO, newline, ft_strlen(newline));
 	if (rl_on_new_line() == FAIL)
-		write(STDOUT_FILENO, ERR_ON_NL, ft_strlen(ERR_ON_NL));
+		write(STDERR_FILENO, ERR_ON_NL, ft_strlen(ERR_ON_NL));
 	rl_replace_line("", CLEAR_UNDO_LIST);
 	rl_redisplay();
 }

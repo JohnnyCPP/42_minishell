@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_unset.c                                         :+:      :+:    :+:   */
+/*   ms_concat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
@@ -11,35 +11,15 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-static	int	ms_print_unseterr(const char *arg)
+char	*ms_concat(const char *str1, const char *str2, const char *str3)
 {
-	char	*error;
+	char	*strjoin;
+	char	*aux;
 
-	error = ms_concat(ERR_EXPORT_HEAD, arg, ERR_EXPORT_TAIL);
-	ms_puterr(error);
-	free(error);
-	return (EXIT_FAILURE);
-}
-
-int	ms_unset(t_shell *shell)
-{
-	t_token	*current;
-	int		exit_code;
-
-	if (!shell->tokens->head->next)
-		return (STD_RET_OK);
-	current = shell->tokens->head->next;
-	exit_code = STD_RET_OK;
-	while (current)
-	{
-		if (!ms_is_validenv(current->lexeme))
-		{
-			ms_print_unseterr(current->lexeme);
-			exit_code = STD_RET_KO;
-		}
-		else
-			ms_unset_var(shell, current->lexeme);
-		current = current->next;
-	}
-	return (exit_code);
+	aux = ft_strjoin(str1, str2);
+	if (!aux)
+		return (NULL);
+	strjoin = ft_strjoin(aux, str3);
+	free(aux);
+	return (strjoin);
 }

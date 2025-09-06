@@ -11,8 +11,18 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-int	ms_pwd(t_token_list *list)
+int	ms_pwd(void)
 {
-	(void) list;
-	return (STD_RET_OK);
+	char	cwd[PATH_MAX];
+
+	if (getcwd(cwd, sizeof(cwd)))
+	{
+		printf("%s\n", cwd);
+		return (STD_RET_OK);
+	}
+	else
+	{
+		perror(CMD_PWD);
+		return (STD_RET_KO);
+	}
 }

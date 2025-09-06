@@ -39,11 +39,11 @@ static	int	ms_is_valid(const char *lexeme)
 	return (TRUE);
 }
 
-int	ms_are_tokens_valid(t_token_list *list)
+int	ms_are_tokens_valid(t_token_list *tokens)
 {
 	t_token	*current;
 
-	current = list->head;
+	current = tokens->head;
 	while (current)
 	{
 		if (current->type == T_WORD && current->lexeme)

@@ -33,7 +33,7 @@ static	int	ms_get_wordlen(const char *word)
 	return (i);
 }
 
-int	ms_analyze_word(const char *input, t_token_list *list)
+int	ms_analyze_word(const char *input, t_token_list *tokens)
 {
 	t_token	*word;
 	int		wordlen;
@@ -42,7 +42,7 @@ int	ms_analyze_word(const char *input, t_token_list *list)
 	wordlen = ms_get_wordlen(input);
 	lexeme = ft_substr(input, 0, wordlen);
 	word = ms_create_token(T_WORD, lexeme);
-	ms_push_token(list, word);
+	ms_push_token(tokens, word);
 	return (wordlen);
 }
 
@@ -57,23 +57,23 @@ static	size_t	ms_push_redir(t_token_list *l, t_token_type t, const char *lex)
 	return (strlen);
 }
 
-size_t	ms_analyze_redirection(const char *input, t_token_list *list)
+size_t	ms_analyze_redirection(const char *input, t_token_list *tokens)
 {
 	if (ms_isappend(input))
-		return (ms_push_redir(list, T_REDIR_APND, APPND_STR));
+		return (ms_push_redir(tokens, T_REDIR_APND, APPND_STR));
 	else if (ms_isheredoc(input))
-		return (ms_push_redir(list, T_HEREDOC, HEREDOC_STR));
+		return (ms_push_redir(tokens, T_HEREDOC, HEREDOC_STR));
 	else if (*input == '>')
-		return (ms_push_redir(list, T_REDIR_OUT, REDIROUT_STR));
+		return (ms_push_redir(tokens, T_REDIR_OUT, REDIROUT_STR));
 	else
-		return (ms_push_redir(list, T_REDIR_IN, REDIRIN_STR));
+		return (ms_push_redir(tokens, T_REDIR_IN, REDIRIN_STR));
 }
 
-int	ms_analyze_pipe(t_token_list *list)
+int	ms_analyze_pipe(t_token_list *tokens)
 {
 	t_token		*pipe;
 
 	pipe = ms_create_token(T_PIPE, ft_strdup("|"));
-	ms_push_token(list, pipe);
+	ms_push_token(tokens, pipe);
 	return (1);
 }

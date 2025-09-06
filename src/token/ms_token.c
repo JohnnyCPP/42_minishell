@@ -13,15 +13,15 @@
 
 t_token_list	*ms_create_token_list(void)
 {
-	t_token_list	*list;
+	t_token_list	*tokens;
 
-	list = ft_calloc(1, sizeof(t_token_list));
-	if (!list)
+	tokens = ft_calloc(1, sizeof(t_token_list));
+	if (!tokens)
 		return (NULL);
-	list->head = NULL;
-	list->tail = NULL;
-	list->length = 0;
-	return (list);
+	tokens->head = NULL;
+	tokens->tail = NULL;
+	tokens->length = 0;
+	return (tokens);
 }
 
 t_token	*ms_create_token(t_token_type type, char *lexeme)
@@ -40,31 +40,31 @@ t_token	*ms_create_token(t_token_type type, char *lexeme)
 	return (token);
 }
 
-void	ms_push_token(t_token_list *list, t_token *new)
+void	ms_push_token(t_token_list *tokens, t_token *new)
 {
-	if (!list || !new)
+	if (!tokens || !new)
 		return ;
-	if (!list->tail)
+	if (!tokens->tail)
 	{
-		list->head = new;
-		list->tail = new;
+		tokens->head = new;
+		tokens->tail = new;
 	}
 	else
 	{
-		list->tail->next = new;
-		list->tail = new;
+		tokens->tail->next = new;
+		tokens->tail = new;
 	}
-	list->length ++;
+	tokens->length ++;
 }
 
-void	ms_free_tokens(t_token_list *list)
+void	ms_free_tokens(t_token_list *tokens)
 {
 	t_token	*current;
 	t_token	*next;
 
-	if (!list)
+	if (!tokens)
 		return ;
-	current = list->head;
+	current = tokens->head;
 	while (current)
 	{
 		next = current->next;
@@ -75,11 +75,11 @@ void	ms_free_tokens(t_token_list *list)
 	}
 }
 
-void	ms_delete_list(t_token_list **list)
+void	ms_delete_tokens(t_token_list **tokens)
 {
-	if (!list)
+	if (!tokens || !*tokens)
 		return ;
-	ms_free_tokens(*list);
-	free(*list);
-	*list = NULL;
+	ms_free_tokens(*tokens);
+	free(*tokens);
+	*tokens = NULL;
 }

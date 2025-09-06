@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_unset.c                                         :+:      :+:    :+:   */
+/*   ms_get_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
@@ -11,35 +11,23 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-static	int	ms_print_unseterr(const char *arg)
+char	*ms_get_var(t_shell *shell, const char *name)
 {
-	char	*error;
+	int	i;
+	int	strlen;
 
-	error = ms_concat(ERR_EXPORT_HEAD, arg, ERR_EXPORT_TAIL);
-	ms_puterr(error);
-	free(error);
-	return (EXIT_FAILURE);
-}
-
-int	ms_unset(t_shell *shell)
-{
-	t_token	*current;
-	int		exit_code;
-
-	if (!shell->tokens->head->next)
-		return (STD_RET_OK);
-	current = shell->tokens->head->next;
-	exit_code = STD_RET_OK;
-	while (current)
+	if (!shell->env)
+		return (NULL);
+	i = 0;
+	strlen = (int) ft_strlen(name);
+	while (shell->env[i])
 	{
-		if (!ms_is_validenv(current->lexeme))
+		if (!ft_strncmp(shell->env[i], name, strlen))
 		{
-			ms_print_unseterr(current->lexeme);
-			exit_code = STD_RET_KO;
+			if (shell->env[i][strlen] == '=')
+				return (&shell->env[i][strlen + 1]);
 		}
-		else
-			ms_unset_var(shell, current->lexeme);
-		current = current->next;
+		i ++;
 	}
-	return (exit_code);
+	return (NULL);
 }

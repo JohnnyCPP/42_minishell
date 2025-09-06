@@ -11,13 +11,13 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-int	ms_exit(t_token_list *list)
+int	ms_exit(t_shell *shell)
 {
 	printf(MSG_EXIT_SHELL);
-	if (!list || !list->head)
+	if (!shell->tokens || !shell->tokens->head)
 		exit(STD_RET_OK);
 	rl_clear_history();
-	ms_delete_list(&list);
+	ms_delete_tokens(&shell->tokens);
 	exit(STD_RET_OK);
 	return (STD_RET_OK);
 }
