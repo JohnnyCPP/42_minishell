@@ -12,10 +12,8 @@
 #include "minishell.h"
 
 /**
- * TODO: 1. inspection of $PATH for command lookup
- *       2. execution of system commands
- *       3. persist history
- *       4. redirections and pipes
+ * TODO: 1. persist history
+ *       2. redirections and pipes
  */
 static	void	ms_run_command(t_shell *shell)
 {

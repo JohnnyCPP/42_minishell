@@ -11,16 +11,16 @@
 /* ************************************************************************** */
 #include "libft.h"
 
-static	char	*ft_get_next_word(const char **str, const char DELIM)
+static	char	*ft_get_next_word(const char **str, const char delim)
 {
 	const char	*start;
 	size_t		len;
 
-	while (**str == DELIM)
+	while (**str == delim)
 		(*str)++;
 	start = *str;
 	len = 0;
-	while (**str && **str != DELIM)
+	while (**str && **str != delim)
 	{
 		len ++;
 		(*str)++;
@@ -28,7 +28,7 @@ static	char	*ft_get_next_word(const char **str, const char DELIM)
 	return (ft_substr(start, 0, len));
 }
 
-static	int	ft_count_words(const char *str, const char DELIM)
+static	int	ft_count_words(const char *str, const char delim)
 {
 	int	words;
 	int	in_word;
@@ -37,12 +37,12 @@ static	int	ft_count_words(const char *str, const char DELIM)
 	in_word = 0;
 	while (*str)
 	{
-		if (*str != DELIM && !in_word)
+		if (*str != delim && !in_word)
 		{
 			in_word = 1;
 			words ++;
 		}
-		else if (*str == DELIM)
+		else if (*str == delim)
 			in_word = 0;
 		str ++;
 	}
@@ -59,7 +59,7 @@ void	ft_free_memory(char **split, int i)
 	free(split);
 }
 
-char	**ft_split(const char *str, const char DELIM)
+char	**ft_split(const char *str, const char delim)
 {
 	char	**split;
 	int		words;
@@ -67,14 +67,14 @@ char	**ft_split(const char *str, const char DELIM)
 
 	if (!str || !*str)
 		return (NULL);
-	words = ft_count_words(str, DELIM);
+	words = ft_count_words(str, delim);
 	split = (char **) ft_calloc(words + 1, sizeof(char *));
 	if (!split)
 		return (NULL);
 	i = 0;
 	while (i < words)
 	{
-		split[i] = ft_get_next_word(&str, DELIM);
+		split[i] = ft_get_next_word(&str, delim);
 		if (!split[i])
 		{
 			ft_free_memory(split, i);

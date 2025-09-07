@@ -6,7 +6,7 @@
 - Global variable for signals
   - "volatile sig_atomic_t g_signal"
 
-[ ]	STEP 1: tokenization & command execution
+[x]	STEP 1: tokenization & command execution
 [ ]	This functionality is covered by unit tests
 
 - Split input into space-delimited strings, respect quotes
@@ -22,20 +22,29 @@
 - Search PATH for executables
 - System commands
 
-[ ]	STEP 2: redirections & heredoc
+[ ]	STEP 2: persisting history across sessions
+[ ]	This functionality is covered by unit tests
+
+- Save history of the current process with add_history()
+- Load history from file if exists
+- Create new history file if doesn't exist
+- When process ends, append history to file
+- When process ends, clear history with rl_clear_history()
+
+[ ]	STEP 3: redirections & heredoc
 [ ]	This functionality is covered by unit tests
 
 - Use open(), dup2(), close() to redirect stdin/stdout
 - Implement heredoc (<<)
 
-[ ]	STEP 3: pipes
+[ ]	STEP 4: pipes
 [ ]	This functionality is covered by unit tests
 
 - Use pipe() & fork() for each command
 - Connect stdout of one process to stdin of the next
 - Loop through commands for multi-pipe handling
 
-[ ]	STEP 4: variables & quoting
+[x]	STEP 5: variables & quoting
 [ ]	This functionality is covered by unit tests
 
 - Expand environment variables ($PATH) using getenv()

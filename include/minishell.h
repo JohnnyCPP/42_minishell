@@ -32,6 +32,7 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <sys/stat.h>
 # include "minishell_constants.h"
 # include "minishell_structures.h"
 # include "minishell_prototypes.h"

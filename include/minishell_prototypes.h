@@ -397,4 +397,41 @@ int		ms_unset_var(t_shell *shell, const char *name);
   */
 int		ms_run_external(t_shell *shell, const char *lexeme);
 
+/**
+  * @brief Converts a list of tokens to a list of strings.
+  *
+  * @param tokens The list of tokens to convert.
+  *
+  * @return A pointer to the dynamically allocated list of strings, 
+  *         or NULL if memory allocation failed.
+  */
+char	**ms_to_argv(t_token_list *tokens);
+
+/**
+  * @brief Checks if a string is a path.
+  *
+  * @param str The string to be checked.
+  *
+  * @return A non-zero value if the string contains a slash,
+  *         otherwise it returns 0.
+  */
+int		ms_is_path(const char *str);
+
+/**
+  * @brief Searches for a path in PATH environment variable.
+  *
+  * @param shell The shell environment.
+  * @param cmd The command to look for.
+  *
+  * @return The path to the command or NULL if memory allocation fails.
+  */
+char	*ms_get_path(t_shell *shell, const char *cmd);
+
+/**
+  * @brief Frees a two-dimensional array of strings.
+  *
+  * @param str The array to free.
+  */
+void	ms_free_strings(char **str);
+
 #endif

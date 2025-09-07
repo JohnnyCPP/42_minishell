@@ -19,11 +19,16 @@
 # define ERR_EXPORT_TAIL "': not a valid identifier\n"
 # define ERR_OLDPWD "Error: OLDPWD not set\n"
 # define ERR_HOME "Error: HOME not set\n"
+# define ERR_EXECVE_HEAD "Error: "
+# define ERR_EXECVE_TAIL ": no such file or directory\n"
+# define ERR_PERM_DENIED ": permission denied\n"
+# define ERR_IS_DIRECTORY ": is a directory\n"
 
 // application errors (perror)
 # define ERR_SIGINT "signal (SIGINT)"
 # define ERR_SIGQUIT "signal (SIGQUIT)"
 # define ERR_GETCWD "getcwd"
+# define ERR_EXECVE "execve"
 
 // notifies the user of a successful termination
 # define MSG_EXIT_SHELL "exit\n"
@@ -66,13 +71,18 @@
 // 0 = success
 // 1 = general error
 // 2 = specific errors (e.g. cd with too many args)
+// 126 = the command was found, but it is not executable
+// 127 = the command could not be found
 # define STD_RET_OK 0
 # define STD_RET_KO 1
 # define STD_RET_INCORRECT 2
+# define STD_RET_CANTEXEC 126
+# define STD_RET_NOTFOUND 127
 
 // common environment variables
 # define EVAR_HOME "HOME"
 # define EVAR_OLDPWD "OLDPWD"
+# define EVAR_PATH "PATH"
 # define EVAR_PWD "PWD"
 
 // used by cd to return to the previous path
@@ -81,5 +91,12 @@
 // used by export to print all environment variables
 # define EXPORT_FMT_NOVAL "declare -x %s\n"
 # define EXPORT_FMT "declare -x %s=\"%s\"\n"
+
+// a child process id is zero
+# define PROC_CHILD 0
+
+// configures the behavior of waitpid()
+// 0 = wait for the child to die
+# define WAIT_FOR_CHILD 0
 
 #endif

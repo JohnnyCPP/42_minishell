@@ -35,7 +35,7 @@ static	int	ms_not_found(t_shell *shell, const char *path)
 	return (TRUE);
 }
 
-static	char	*ms_get_path(t_shell *shell)
+static	char	*ms_get_path_to_cd(t_shell *shell)
 {
 	if (!shell->tokens->head->next)
 		return (ms_get_var(shell, EVAR_HOME));
@@ -62,7 +62,7 @@ int	ms_cd(t_shell *shell)
 
 	if (ms_getcwd(old_wd, sizeof(old_wd)) == EXIT_FAILURE)
 		return (STD_RET_KO);
-	path = ms_get_path(shell);
+	path = ms_get_path_to_cd(shell);
 	if (ms_not_found(shell, path))
 		return (STD_RET_KO);
 	if (ms_chdir(path) == EXIT_FAILURE)

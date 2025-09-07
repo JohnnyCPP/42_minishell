@@ -24,6 +24,7 @@ SIGNAL_PATH		= ${SRC_PATH}signal/
 BUILTIN_PATH	= ${SRC_PATH}builtin/
 ENV_PATH		= ${SRC_PATH}env/
 STR_PATH		= ${SRC_PATH}string/
+EXT_PATH		= ${SRC_PATH}external/
 LIBFT_PATH		= ${LIB_PATH}libft/
 LIBFT_INC_PATH	= ${LIBFT_PATH}include/
 
@@ -99,8 +100,7 @@ RE_LIBFT		= ${MAKE_LIBFT} ${RE}
 
 
 ROOT_SRC_FILES	= ms_main.c \
-				  ms_repl.c \
-				  ms_run_external.c
+				  ms_repl.c
 LEX_SRC_FILES	= ms_char.c \
 				  ms_get_tokens.c \
 				  ms_lexical_analysis.c \
@@ -129,7 +129,12 @@ ENV_SRC_FILES	= ms_envlen.c \
 				  ms_set_var.c \
 				  ms_unset_var.c
 STR_SRC_FILES	= ms_concat.c \
+				  ms_free_strings.c \
+				  ms_is_path.c \
 				  ms_puterr.c
+EXT_SRC_FILES	= ms_get_path.c \
+				  ms_run_external.c \
+				  ms_to_argv.c
 ROOT_SRCS		= $(addprefix ${SRC_PATH}, ${ROOT_SRC_FILES})
 LEX_SRCS		= $(addprefix ${LEX_PATH}, ${LEX_SRC_FILES})
 TOKEN_SRCS		= $(addprefix ${TOKEN_PATH}, ${TOKEN_SRC_FILES})
@@ -137,7 +142,15 @@ SIGNAL_SRCS		= $(addprefix ${SIGNAL_PATH}, ${SGNAL_SRC_FILES})
 BUILTIN_SRCS	= $(addprefix ${BUILTIN_PATH}, ${BLTIN_SRC_FILES})
 ENV_SRCS		= $(addprefix ${ENV_PATH}, ${ENV_SRC_FILES})
 STR_SRCS		= $(addprefix ${STR_PATH}, ${STR_SRC_FILES})
-SRC_FILES		= ${ROOT_SRCS} ${LEX_SRCS} ${TOKEN_SRCS} ${SIGNAL_SRCS} ${BUILTIN_SRCS} ${ENV_SRCS} ${STR_SRCS}
+EXT_SRCS		= $(addprefix ${EXT_PATH}, ${EXT_SRC_FILES})
+SRC_FILES		= ${ROOT_SRCS} \
+				  ${LEX_SRCS} \
+				  ${TOKEN_SRCS} \
+				  ${SIGNAL_SRCS} \
+				  ${BUILTIN_SRCS} \
+				  ${ENV_SRCS} \
+				  ${STR_SRCS} \
+				  ${EXT_SRCS}
 # "patsubst": pattern substitution
 # parameters: pattern, replacement, text
 #
