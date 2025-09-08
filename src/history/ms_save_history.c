@@ -1,49 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_structures.h                             :+:      :+:    :+:   */
+/*   ms_save_history.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:05:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/08/22 17:18:15 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/04/29 23:05:34 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef MINISHELL_STRUCTURES_H
-# define MINISHELL_STRUCTURES_H
+#include "minishell.h"
 
-typedef enum e_token_type
+void	ms_save_history(t_shell *shell)
 {
-	T_WORD,
-	T_PIPE,
-	T_REDIR_IN,
-	T_REDIR_OUT,
-	T_REDIR_APND,
-	T_HEREDOC
-}	t_token_type;
+	HIST_ENTRY	**history;
+	char		*history_path;
+	int			fd;
+	int			i;
 
-typedef struct s_token
-{
-	t_token_type	type;
-	int				is_singleq;
-	char			*lexeme;
-	struct s_token	*next;
-}	t_token;
-
-typedef struct s_token_list
-{
-	t_token	*head;
-	t_token	*tail;
-	int		length;
-}	t_token_list;
-
-typedef struct s_shell
-{
-	int				exit_code;
-	char			*input;
-	char			**env;
-	char			**history;
-	t_token_list	*tokens;
-}	t_shell;
-
-#endif
+	// history_list() function is illegal
+	history = history_list();
+	if (!history)
+		return ;
+	history_path = ms_get_history_path(shell);
+	if (!history_path)
+		return ;
+	fd = open(history_path, O_WRONLY | O_CREAT | O_TRUNC, MODE_RW);
+	if (fd == FAIL)
+	{
+		free(history_path);
+		return ;
+	}
+	i = 0;
+	while (history[i])
+	{
+		ft_putstr_fd(history[i]->line, fd);
+		ft_putstr_fd("\n", fd);
+		i ++;
+	}
+	close(fd);
+	free(history_path);
+}

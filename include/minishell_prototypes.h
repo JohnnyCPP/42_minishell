@@ -434,4 +434,36 @@ char	*ms_get_path(t_shell *shell, const char *cmd);
   */
 void	ms_free_strings(char **str);
 
+/**
+  * @brief Gets the absolute path to the history file.
+  *
+  * @param shell The shell environment.
+  *
+  * @return A dynamically allocated string built 
+  *         concatenating $PATH + "\" + FILE_HISTORY.
+  *         If $PATH is not set, returns NULL.
+  */
+char	*ms_get_history_path(t_shell *shell);
+
+/**
+  * @brief If history file exists, loads history from it.
+  *
+  * @param shell The shell environment.
+  */
+void	ms_load_history(t_shell *shell);
+
+/**
+  * @brief Saves history to a file, creating it if needed.
+  *
+  * @param shell The shell environment.
+  */
+void	ms_save_history(t_shell *shell);
+
+/**
+  * @brief Frees allocated memory and readline resources.
+  *
+  * @param shell The shell environment.
+  */
+void	ms_free_resources(t_shell *shell);
+
 #endif

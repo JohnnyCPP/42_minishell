@@ -13,11 +13,7 @@
 
 int	ms_exit(t_shell *shell)
 {
-	printf(MSG_EXIT_SHELL);
-	if (!shell->tokens || !shell->tokens->head)
-		exit(STD_RET_OK);
-	rl_clear_history();
-	ms_delete_tokens(&shell->tokens);
+	ms_free_resources(shell);
 	exit(STD_RET_OK);
 	return (STD_RET_OK);
 }

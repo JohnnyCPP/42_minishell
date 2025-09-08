@@ -44,12 +44,6 @@ static	void	ms_evaluate(t_shell *shell)
 	ms_delete_tokens(&shell->tokens);
 }
 
-static	void	ms_exitshell(void)
-{
-	rl_clear_history();
-	printf(MSG_EXIT_SHELL);
-}
-
 void	ms_read_loop(t_shell *shell)
 {
 	while (TRUE)
@@ -57,10 +51,7 @@ void	ms_read_loop(t_shell *shell)
 		ms_set_signal(SIGNAL_RESET);
 		shell->input = readline(PROMPT);
 		if (!shell->input)
-		{
-			ms_exitshell();
 			break ;
-		}
 		if (shell->input[0] != '\0')
 		{
 			ms_evaluate(shell);

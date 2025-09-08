@@ -25,6 +25,7 @@ BUILTIN_PATH	= ${SRC_PATH}builtin/
 ENV_PATH		= ${SRC_PATH}env/
 STR_PATH		= ${SRC_PATH}string/
 EXT_PATH		= ${SRC_PATH}external/
+HIST_PATH		= ${SRC_PATH}history/
 LIBFT_PATH		= ${LIB_PATH}libft/
 LIBFT_INC_PATH	= ${LIBFT_PATH}include/
 
@@ -99,7 +100,8 @@ FCLEAN_LIBFT	= ${MAKE_LIBFT} ${FCLEAN}
 RE_LIBFT		= ${MAKE_LIBFT} ${RE}
 
 
-ROOT_SRC_FILES	= ms_main.c \
+ROOT_SRC_FILES	= ms_free_resources.c \
+				  ms_main.c \
 				  ms_repl.c
 LEX_SRC_FILES	= ms_char.c \
 				  ms_get_tokens.c \
@@ -135,6 +137,9 @@ STR_SRC_FILES	= ms_concat.c \
 EXT_SRC_FILES	= ms_get_path.c \
 				  ms_run_external.c \
 				  ms_to_argv.c
+HIST_SRC_FILES	= ms_get_history_path.c \
+				  ms_load_history.c \
+				  ms_save_history.c
 ROOT_SRCS		= $(addprefix ${SRC_PATH}, ${ROOT_SRC_FILES})
 LEX_SRCS		= $(addprefix ${LEX_PATH}, ${LEX_SRC_FILES})
 TOKEN_SRCS		= $(addprefix ${TOKEN_PATH}, ${TOKEN_SRC_FILES})
@@ -143,6 +148,7 @@ BUILTIN_SRCS	= $(addprefix ${BUILTIN_PATH}, ${BLTIN_SRC_FILES})
 ENV_SRCS		= $(addprefix ${ENV_PATH}, ${ENV_SRC_FILES})
 STR_SRCS		= $(addprefix ${STR_PATH}, ${STR_SRC_FILES})
 EXT_SRCS		= $(addprefix ${EXT_PATH}, ${EXT_SRC_FILES})
+HIST_SRCS		= $(addprefix ${HIST_PATH}, ${HIST_SRC_FILES})
 SRC_FILES		= ${ROOT_SRCS} \
 				  ${LEX_SRCS} \
 				  ${TOKEN_SRCS} \
@@ -150,7 +156,8 @@ SRC_FILES		= ${ROOT_SRCS} \
 				  ${BUILTIN_SRCS} \
 				  ${ENV_SRCS} \
 				  ${STR_SRCS} \
-				  ${EXT_SRCS}
+				  ${EXT_SRCS} \
+				  ${HIST_SRCS}
 # "patsubst": pattern substitution
 # parameters: pattern, replacement, text
 #

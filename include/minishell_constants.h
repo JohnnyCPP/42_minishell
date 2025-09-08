@@ -99,4 +99,13 @@
 // 0 = wait for the child to die
 # define WAIT_FOR_CHILD 0
 
+// used by history functionality to persist history across sessions
+# define FILE_HISTORY ".minishell_history"
+
+// returned by open() when a file does not exist
+# define DOES_NOT_EXIST -1
+
+// used by open() to create a new history file
+# define MODE_RW 0644
+
 #endif

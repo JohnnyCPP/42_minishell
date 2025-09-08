@@ -19,7 +19,8 @@ int	main(int argc, char **argv, char **env)
 	(void) argv;
 	ms_init_env(&shell, env);
 	ms_configure_signals();
+	ms_load_history(&shell);
 	ms_read_loop(&shell);
-	ms_free_env(&shell);
+	ms_free_resources(&shell);
 	return (EXIT_SUCCESS);
 }
