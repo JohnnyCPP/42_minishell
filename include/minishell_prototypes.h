@@ -501,4 +501,38 @@ void	ms_add_history(t_shell *shell);
   */
 void	ms_init_resources(t_shell *shell, char **env);
 
+/**
+  * @brief Prints an error message when a path is not found.
+  *
+  * @param cmd The rightmost part of a path.
+  */
+void	ms_not_found(const char *cmd);
+
+/**
+  * @brief Prints an error message when a resource can't be executed.
+  *
+  * @param cmd The rightmost part of a path.
+  */
+void	ms_permission_denied(const char *cmd);
+
+/**
+  * @brief Prints an error message when a path is a directory.
+  *
+  * @param cmd The rightmost part of a path.
+  */
+void	ms_is_a_directory(const char *cmd);
+
+/**
+  * @brief Checks if a path is valid for execution.
+  *
+  * @param cmd_path The absolute path to check.
+  * @param lexeme The rightmost part of a path.
+  *
+  * @return STD_RET_OK if the path is valid.
+  *         STD_RET_NOTFOUND if the path is not found.
+  *         STD_RET_CANTEXEC if the path points to a directory, 
+  *                          or lacks execution permissions.
+  */
+int		ms_is_path_valid(char *cmd_path, const char *lexeme);
+
 #endif

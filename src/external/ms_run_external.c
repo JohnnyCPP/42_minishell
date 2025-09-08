@@ -13,7 +13,7 @@
 
 static	int	ms_execute_parent(pid_t child, char *cmd_path, char **argv)
 {
-	int		child_status;
+	int	child_status;
 
 	waitpid(child, &child_status, WAIT_FOR_CHILD);
 	free(cmd_path);
@@ -35,25 +35,11 @@ static	int	ms_child_failed(char *cmd_path, char **argv)
 	return (STD_RET_KO);
 }
 
-static	int	ms_not_found(const char *cmd)
-{
-	char	*error;
-
-	error = ms_concat(ERR_EXECVE_HEAD, cmd, ERR_EXECVE_TAIL);
-	ms_puterr(error);
-	free(error);
-	return (STD_RET_NOTFOUND);
-}
-
-int	ms_run_external(t_shell *shell, const char *lexeme)
+static	int	ms_execute_cmd(t_shell *shell, char *cmd_path)
 {
 	char	**argv;
-	char	*cmd_path;
 	pid_t	child;
 
-	cmd_path = ms_get_path(shell, lexeme);
-	if (!cmd_path)
-		return (ms_not_found(lexeme));
 	argv = ms_to_argv(shell->tokens);
 	if (!argv)
 	{
@@ -66,4 +52,21 @@ int	ms_run_external(t_shell *shell, const char *lexeme)
 	if (child == PROC_CHILD)
 		return (ms_execute_child(shell, cmd_path, argv));
 	return (ms_execute_parent(child, cmd_path, argv));
+}
+
+int	ms_run_external(t_shell *shell, const char *lexeme)
+{
+	char	*cmd_path;
+	int		error_code;
+	int		exit_status;
+
+	cmd_path = ms_get_path(shell, lexeme);
+	error_code = ms_is_path_valid(cmd_path, lexeme);
+	if (error_code)
+	{
+		free(cmd_path);
+		return (error_code);
+	}
+	exit_status = ms_execute_cmd(shell, cmd_path);
+	return (exit_status);
 }

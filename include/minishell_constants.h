@@ -71,7 +71,7 @@
 // 0 = success
 // 1 = general error
 // 2 = specific errors (e.g. cd with too many args)
-// 126 = the command was found, but it is not executable
+// 126 = the command was found, but it is not executable (or a directory)
 // 127 = the command could not be found
 # define STD_RET_OK 0
 # define STD_RET_KO 1

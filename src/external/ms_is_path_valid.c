@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_get_path.c                                      :+:      :+:    :+:   */
+/*   ms_is_path_valid.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
@@ -11,39 +11,28 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-static	char	*ms_search_path(char **paths, const char *cmd)
+int	ms_is_path_valid(char *cmd_path, const char *lexeme)
 {
-	char	*full_path;
-	int		i;
+	struct stat	stats;
+	int			is_directory;
+	int			is_executable;
 
-	i = 0;
-	while (paths[i])
+	if (!cmd_path)
 	{
-		full_path = ms_concat(paths[i ++], "/", cmd);
-		if (!full_path)
-			continue ;
-		if (!access(full_path, F_OK))
-			return (full_path);
-		free(full_path);
+		ms_not_found(lexeme);
+		return (STD_RET_NOTFOUND);
 	}
-	return (NULL);
-}
-
-char	*ms_get_path(t_shell *shell, const char *cmd)
-{
-	char	*env_path;
-	char	*full_path;
-	char	**paths;
-
-	if (ms_is_path(cmd))
-		return (ft_strdup(cmd));
-	env_path = ms_get_var(shell, EVAR_PATH);
-	if (!env_path)
-		return (NULL);
-	paths = ft_split(env_path, ':');
-	if (!paths)
-		return (NULL);
-	full_path = ms_search_path(paths, cmd);
-	ms_free_strings(paths);
-	return (full_path);
+	is_directory = !stat(cmd_path, &stats) && S_ISDIR(stats.st_mode);
+	is_executable = !access(cmd_path, X_OK);
+	if (is_directory)
+	{
+		ms_is_a_directory(lexeme);
+		return (STD_RET_CANTEXEC);
+	}
+	if (!is_executable)
+	{
+		ms_permission_denied(lexeme);
+		return (STD_RET_CANTEXEC);
+	}
+	return (STD_RET_OK);
 }

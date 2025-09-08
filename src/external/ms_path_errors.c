@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_get_path.c                                      :+:      :+:    :+:   */
+/*   ms_path_errors.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
@@ -11,39 +11,29 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-static	char	*ms_search_path(char **paths, const char *cmd)
+void	ms_not_found(const char *cmd)
 {
-	char	*full_path;
-	int		i;
+	char	*error;
 
-	i = 0;
-	while (paths[i])
-	{
-		full_path = ms_concat(paths[i ++], "/", cmd);
-		if (!full_path)
-			continue ;
-		if (!access(full_path, F_OK))
-			return (full_path);
-		free(full_path);
-	}
-	return (NULL);
+	error = ms_concat(ERR_EXECVE_HEAD, cmd, ERR_EXECVE_TAIL);
+	ms_puterr(error);
+	free(error);
 }
 
-char	*ms_get_path(t_shell *shell, const char *cmd)
+void	ms_is_a_directory(const char *cmd)
 {
-	char	*env_path;
-	char	*full_path;
-	char	**paths;
+	char	*error;
 
-	if (ms_is_path(cmd))
-		return (ft_strdup(cmd));
-	env_path = ms_get_var(shell, EVAR_PATH);
-	if (!env_path)
-		return (NULL);
-	paths = ft_split(env_path, ':');
-	if (!paths)
-		return (NULL);
-	full_path = ms_search_path(paths, cmd);
-	ms_free_strings(paths);
-	return (full_path);
+	error = ms_concat(ERR_EXECVE_HEAD, cmd, ERR_IS_DIRECTORY);
+	ms_puterr(error);
+	free(error);
+}
+
+void	ms_permission_denied(const char *cmd)
+{
+	char	*error;
+
+	error = ms_concat(ERR_EXECVE_HEAD, cmd, ERR_PERM_DENIED);
+	ms_puterr(error);
+	free(error);
 }

@@ -135,6 +135,8 @@ STR_SRC_FILES	= ms_concat.c \
 				  ms_is_path.c \
 				  ms_puterr.c
 EXT_SRC_FILES	= ms_get_path.c \
+				  ms_is_path_valid.c \
+				  ms_path_errors.c \
 				  ms_run_external.c \
 				  ms_to_argv.c
 HIST_SRC_FILES	= ms_add_history.c \
