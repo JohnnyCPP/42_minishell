@@ -47,11 +47,25 @@ void	ms_puterr(const char *err);
 char	*ms_concat(const char *str1, const char *str2, const char *str3);
 
 /**
+  * @brief Evaluates user imput, creating tokens and running commands.
+  *
+  * @param shell The shell environment.
+  */
+void	ms_evaluate(t_shell *shell);
+
+/**
   * @brief Displays the prompt, waits for user input, evaluates it and repeats.
   *
   * @param shell The shell environment.
   */
 void	ms_read_loop(t_shell *shell);
+
+/**
+  * @brief Determines if running a built-in or an external command.
+  *
+  * @param shell The shell environment.
+  */
+void	ms_run_command(t_shell *shell);
 
 /**
   * @brief Creates a new token with the data passed through parameters.
@@ -472,6 +486,13 @@ void	ms_free_resources(t_shell *shell);
   * @param shell The shell environment.
   */
 void	ms_init_history(t_shell *shell);
+
+/**
+  * @brief Adds the user input to the history.
+  *
+  * @param shell The shell environment.
+  */
+void	ms_add_history(t_shell *shell);
 
 /**
   * @brief Initializes shell resources.

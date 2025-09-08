@@ -1,40 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_save_history.c                                  :+:      :+:    :+:   */
+/*   ms_evaluate.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:05:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/04/29 23:05:34 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:16:55 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-void	ms_save_history(t_shell *shell)
+void	ms_evaluate(t_shell *shell)
 {
-	char	*history_path;
-	int		fd;
-	int		i;
-
-	if (!shell->history)
+	if (!shell)
 		return ;
-	history_path = ms_get_history_path(shell);
-	if (!history_path)
+	shell->tokens = ms_get_tokens(shell->input);
+	if (!shell->tokens || !shell->tokens->head)
 		return ;
-	fd = open(history_path, O_WRONLY | O_CREAT | O_APPEND, MODE_RW);
-	if (fd == FAIL)
+	add_history(shell->input);
+	ms_add_history(shell);
+	if (!ms_are_tokens_valid(shell->tokens))
 	{
-		free(history_path);
+		ms_delete_tokens(&shell->tokens);
 		return ;
 	}
-	i = 0;
-	while (shell->history[i])
-	{
-		ft_putstr_fd(shell->history[i], fd);
-		ft_putstr_fd("\n", fd);
-		i ++;
-	}
-	close(fd);
-	free(history_path);
+	ms_strip_quotes(shell);
+	ms_run_command(shell);
+	ms_delete_tokens(&shell->tokens);
 }

@@ -1,40 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_save_history.c                                  :+:      :+:    :+:   */
+/*   ms_read_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:05:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/04/29 23:05:34 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:16:55 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-void	ms_save_history(t_shell *shell)
+void	ms_read_loop(t_shell *shell)
 {
-	char	*history_path;
-	int		fd;
-	int		i;
-
-	if (!shell->history)
-		return ;
-	history_path = ms_get_history_path(shell);
-	if (!history_path)
-		return ;
-	fd = open(history_path, O_WRONLY | O_CREAT | O_APPEND, MODE_RW);
-	if (fd == FAIL)
+	while (TRUE)
 	{
-		free(history_path);
-		return ;
+		ms_set_signal(SIGNAL_RESET);
+		shell->input = readline(PROMPT);
+		if (!shell->input)
+			break ;
+		if (shell->input[0] != '\0')
+		{
+			ms_evaluate(shell);
+			continue ;
+		}
+		if (ms_get_signal() == SIGINT)
+		{
+			free(shell->input);
+			continue ;
+		}
+		free(shell->input);
 	}
-	i = 0;
-	while (shell->history[i])
-	{
-		ft_putstr_fd(shell->history[i], fd);
-		ft_putstr_fd("\n", fd);
-		i ++;
-	}
-	close(fd);
-	free(history_path);
 }
