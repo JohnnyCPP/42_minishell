@@ -20,9 +20,6 @@ int	ms_pwd(void)
 		printf("%s\n", cwd);
 		return (STD_RET_OK);
 	}
-	else
-	{
-		perror(CMD_PWD);
-		return (STD_RET_KO);
-	}
+	perror(CMD_PWD);
+	return (STD_RET_KO);
 }

@@ -18,7 +18,7 @@ static	void	ms_read_existing_history(char *next_line, const int fd)
 
 	while (next_line)
 	{
-		strlen = ft_strlen(next_line);
+		strlen = (int) ft_strlen(next_line);
 		end = strlen - 1;
 		if (next_line[end] == '\n')
 			next_line[end] = '\0';

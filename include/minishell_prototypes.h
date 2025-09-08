@@ -498,8 +498,10 @@ void	ms_add_history(t_shell *shell);
   * @brief Initializes shell resources.
   *
   * @param shell The shell environment.
+  * @param env The caller's environment variables.
+  * @param cmd Path to minishell.
   */
-void	ms_init_resources(t_shell *shell, char **env);
+void	ms_init_resources(t_shell *shell, char **env, char *cmd);
 
 /**
   * @brief Prints an error message when a path is not found.
@@ -534,5 +536,12 @@ void	ms_is_a_directory(const char *cmd);
   *                          or lacks execution permissions.
   */
 int		ms_is_path_valid(char *cmd_path, const char *lexeme);
+
+/**
+  * @brief Builds the prompt and returns a fallback if getcwd() fails.
+  *
+  * @return The prompt as a dynamically allocated string.
+  */
+char	*ms_get_prompt(void);
 
 #endif

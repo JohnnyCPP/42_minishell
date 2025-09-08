@@ -22,7 +22,7 @@
 - Search PATH for executables
 - System commands
 
-[ ]	STEP 2: persisting history across sessions
+[x]	STEP 2: persisting history across sessions
 [ ]	This functionality is covered by unit tests
 
 - Save history of the current process with add_history()

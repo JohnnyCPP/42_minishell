@@ -37,7 +37,11 @@
 # define MSG_UNCL_QUOT "minishell: unclosed quotes in token: %s\n"
 
 // notifies the user that the shell is ready to accept input
-# define PROMPT "minishell> "
+// it's used when getcwd() fails
+# define FALLBACK_PROMPT "minishell-1.0$ "
+
+// appended to getcwd() and used as prompt
+# define PROMPT_TAIL " $ "
 
 // used for infinite loop and return values
 # define TRUE 1
@@ -84,6 +88,7 @@
 # define EVAR_OLDPWD "OLDPWD"
 # define EVAR_PATH "PATH"
 # define EVAR_PWD "PWD"
+# define EVAR_SHELL "SHELL"
 
 // used by cd to return to the previous path
 # define PREV_PATH "-"
@@ -107,5 +112,9 @@
 
 // used by open() to create a new history file
 # define MODE_RW 0644
+
+// used to drive the repl loop
+# define ACT_BREAK "break"
+# define ACT_CONTINUE "continue"
 
 #endif

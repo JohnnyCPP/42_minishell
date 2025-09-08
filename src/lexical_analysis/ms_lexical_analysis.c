@@ -61,12 +61,11 @@ size_t	ms_analyze_redirection(const char *input, t_token_list *tokens)
 {
 	if (ms_isappend(input))
 		return (ms_push_redir(tokens, T_REDIR_APND, APPND_STR));
-	else if (ms_isheredoc(input))
+	if (ms_isheredoc(input))
 		return (ms_push_redir(tokens, T_HEREDOC, HEREDOC_STR));
-	else if (*input == '>')
+	if (*input == '>')
 		return (ms_push_redir(tokens, T_REDIR_OUT, REDIROUT_STR));
-	else
-		return (ms_push_redir(tokens, T_REDIR_IN, REDIRIN_STR));
+	return (ms_push_redir(tokens, T_REDIR_IN, REDIRIN_STR));
 }
 
 int	ms_analyze_pipe(t_token_list *tokens)

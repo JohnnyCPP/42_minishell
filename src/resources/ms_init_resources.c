@@ -11,9 +11,10 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-void	ms_init_resources(t_shell *shell, char **env)
+void	ms_init_resources(t_shell *shell, char **env, char *cmd)
 {
 	ms_init_env(shell, env);
+	ms_set_var(shell, EVAR_SHELL, cmd);
 	ms_init_history(shell);
 	ms_load_history(shell);
 }

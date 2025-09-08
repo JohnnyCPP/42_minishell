@@ -16,8 +16,7 @@ int	main(int argc, char **argv, char **env)
 	t_shell	shell;
 
 	(void) argc;
-	(void) argv;
-	ms_init_resources(&shell, env);
+	ms_init_resources(&shell, env, argv[0]);
 	ms_configure_signals();
 	ms_read_loop(&shell);
 	ms_free_resources(&shell);

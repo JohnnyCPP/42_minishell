@@ -48,8 +48,7 @@ static	int	ms_expand_or_append(int sq, char **res, const char *lx, t_shell *sh)
 {
 	if (!sq && lx[0] == '$')
 		return (ms_expand(res, lx, sh));
-	else
-		return (ms_append(res, lx[0]));
+	return (ms_append(res, lx[0]));
 }
 
 static	char	*ms_process_sequentially(const char *lexeme, t_shell *shell)

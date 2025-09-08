@@ -17,17 +17,17 @@
 INC_PATH		= ./include/
 OBJ_PATH		= ./object/
 SRC_PATH	    = ./src/
-LEX_PATH		= ${SRC_PATH}lexical_analysis/
-TOKEN_PATH		= ${SRC_PATH}token/
-LIB_PATH		= ${SRC_PATH}lib/
-SIGNAL_PATH		= ${SRC_PATH}signal/
 BUILTIN_PATH	= ${SRC_PATH}builtin/
 ENV_PATH		= ${SRC_PATH}env/
-STR_PATH		= ${SRC_PATH}string/
 EXT_PATH		= ${SRC_PATH}external/
 HIST_PATH		= ${SRC_PATH}history/
-RESRC_PATH		= ${SRC_PATH}resources/
+LEX_PATH		= ${SRC_PATH}lexical_analysis/
+LIB_PATH		= ${SRC_PATH}lib/
 REPL_PATH		= ${SRC_PATH}repl/
+RESRC_PATH		= ${SRC_PATH}resources/
+SIGNAL_PATH		= ${SRC_PATH}signal/
+STR_PATH		= ${SRC_PATH}string/
+TOKEN_PATH		= ${SRC_PATH}token/
 LIBFT_PATH		= ${LIB_PATH}libft/
 LIBFT_INC_PATH	= ${LIBFT_PATH}include/
 
@@ -103,17 +103,6 @@ RE_LIBFT		= ${MAKE_LIBFT} ${RE}
 
 
 ROOT_SRC_FILES	= ms_main.c
-LEX_SRC_FILES	= ms_char.c \
-				  ms_get_tokens.c \
-				  ms_lexical_analysis.c \
-				  ms_redirection_analysis.c
-TOKEN_SRC_FILES	= ms_get_var_len.c \
-				  ms_get_var_value.c \
-				  ms_strip_quotes.c \
-				  ms_token.c \
-				  ms_token_validation.c
-SGNAL_SRC_FILES	= ms_configure_signals.c \
-				  ms_g_signal.c
 BLTIN_SRC_FILES	= ms_cd.c \
 				  ms_echo.c \
 				  ms_env.c \
@@ -130,10 +119,6 @@ ENV_SRC_FILES	= ms_envlen.c \
 				  ms_is_validenv.c \
 				  ms_set_var.c \
 				  ms_unset_var.c
-STR_SRC_FILES	= ms_concat.c \
-				  ms_free_strings.c \
-				  ms_is_path.c \
-				  ms_puterr.c
 EXT_SRC_FILES	= ms_get_path.c \
 				  ms_is_path_valid.c \
 				  ms_path_errors.c \
@@ -144,33 +129,49 @@ HIST_SRC_FILES	= ms_add_history.c \
 				  ms_init_history.c \
 				  ms_load_history.c \
 				  ms_save_history.c
-RESRC_SRC_FILES	= ms_free_resources.c \
-				  ms_init_resources.c
+LEX_SRC_FILES	= ms_char.c \
+				  ms_get_tokens.c \
+				  ms_lexical_analysis.c \
+				  ms_redirection_analysis.c
 REPL_SRC_FILES	= ms_evaluate.c \
 				  ms_read_loop.c \
 				  ms_run_command.c
+RESRC_SRC_FILES	= ms_free_resources.c \
+				  ms_init_resources.c
+SGNAL_SRC_FILES	= ms_configure_signals.c \
+				  ms_g_signal.c
+STR_SRC_FILES	= ms_concat.c \
+				  ms_free_strings.c \
+				  ms_get_prompt.c \
+				  ms_is_path.c \
+				  ms_puterr.c
+TOKEN_SRC_FILES	= ms_get_var_len.c \
+				  ms_get_var_value.c \
+				  ms_strip_quotes.c \
+				  ms_token.c \
+				  ms_token_validation.c
 ROOT_SRCS		= $(addprefix ${SRC_PATH}, ${ROOT_SRC_FILES})
-LEX_SRCS		= $(addprefix ${LEX_PATH}, ${LEX_SRC_FILES})
-TOKEN_SRCS		= $(addprefix ${TOKEN_PATH}, ${TOKEN_SRC_FILES})
-SIGNAL_SRCS		= $(addprefix ${SIGNAL_PATH}, ${SGNAL_SRC_FILES})
 BUILTIN_SRCS	= $(addprefix ${BUILTIN_PATH}, ${BLTIN_SRC_FILES})
 ENV_SRCS		= $(addprefix ${ENV_PATH}, ${ENV_SRC_FILES})
-STR_SRCS		= $(addprefix ${STR_PATH}, ${STR_SRC_FILES})
 EXT_SRCS		= $(addprefix ${EXT_PATH}, ${EXT_SRC_FILES})
 HIST_SRCS		= $(addprefix ${HIST_PATH}, ${HIST_SRC_FILES})
-RESRC_SRCS		= $(addprefix ${RESRC_PATH}, ${RESRC_SRC_FILES})
+LEX_SRCS		= $(addprefix ${LEX_PATH}, ${LEX_SRC_FILES})
 REPL_SRCS		= $(addprefix ${REPL_PATH}, ${REPL_SRC_FILES})
+RESRC_SRCS		= $(addprefix ${RESRC_PATH}, ${RESRC_SRC_FILES})
+SIGNAL_SRCS		= $(addprefix ${SIGNAL_PATH}, ${SGNAL_SRC_FILES})
+STR_SRCS		= $(addprefix ${STR_PATH}, ${STR_SRC_FILES})
+TOKEN_SRCS		= $(addprefix ${TOKEN_PATH}, ${TOKEN_SRC_FILES})
 SRC_FILES		= ${ROOT_SRCS} \
-				  ${LEX_SRCS} \
-				  ${TOKEN_SRCS} \
-				  ${SIGNAL_SRCS} \
 				  ${BUILTIN_SRCS} \
 				  ${ENV_SRCS} \
-				  ${STR_SRCS} \
 				  ${EXT_SRCS} \
 				  ${HIST_SRCS} \
+				  ${LEX_SRCS} \
+				  ${REPL_SRCS} \
 				  ${RESRC_SRCS} \
-				  ${REPL_SRCS}
+				  ${SIGNAL_SRCS} \
+				  ${STR_SRCS} \
+				  ${TOKEN_SRCS}
 # "patsubst": pattern substitution
 # parameters: pattern, replacement, text
 #

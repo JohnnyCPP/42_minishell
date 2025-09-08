@@ -13,7 +13,7 @@
 
 int	ms_envlen(char **env)
 {
-	int		i;
+	int	i;
 
 	if (!env)
 		return (0);

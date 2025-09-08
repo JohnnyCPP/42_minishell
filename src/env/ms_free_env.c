@@ -13,7 +13,7 @@
 
 void	ms_free_env(t_shell *shell)
 {
-	int		i;
+	int	i;
 
 	if (!shell->env)
 		return ;

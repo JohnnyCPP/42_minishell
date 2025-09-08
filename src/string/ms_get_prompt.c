@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_read_loop.c                                     :+:      :+:    :+:   */
+/*   ms_get_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
@@ -11,38 +11,15 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-static	const char	*ms_read(t_shell *shell, char *prompt)
+char	*ms_get_prompt(void)
 {
-	shell->input = readline(prompt);
-	if (!shell->input)
-		return (ACT_BREAK);
-	if (shell->input[0] != '\0')
-	{
-		ms_evaluate(shell);
-		return (ACT_CONTINUE);
-	}
-	if (ms_get_signal() == SIGINT)
-	{
-		free(shell->input);
-		return (ACT_CONTINUE);
-	}
-	free(shell->input);
-	return (ACT_CONTINUE);
-}
+	char	cwd[PATH_MAX];
+	char	*strjoin;
 
-void	ms_read_loop(t_shell *shell)
-{
-	const char	*action;
-	char		*prompt;
-
-	while (TRUE)
+	if (getcwd(cwd, sizeof(cwd)))
 	{
-		prompt = ms_get_prompt();
-		ms_set_signal(SIGNAL_RESET);
-		action = ms_read(shell, prompt);
-		if (prompt)
-			free(prompt);
-		if (!ft_strcmp(action, ACT_BREAK))
-			break ;
+		strjoin = ft_strjoin(cwd, PROMPT_TAIL);
+		return (strjoin);
 	}
+	return (ft_strdup(FALLBACK_PROMPT));
 }
