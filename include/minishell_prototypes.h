@@ -466,4 +466,18 @@ void	ms_save_history(t_shell *shell);
   */
 void	ms_free_resources(t_shell *shell);
 
+/**
+  * @brief Initializes an empty history.
+  *
+  * @param shell The shell environment.
+  */
+void	ms_init_history(t_shell *shell);
+
+/**
+  * @brief Initializes shell resources.
+  *
+  * @param shell The shell environment.
+  */
+void	ms_init_resources(t_shell *shell, char **env);
+
 #endif

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_main.c                                          :+:      :+:    :+:   */
+/*   ms_init_resources.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
@@ -11,15 +11,9 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **env)
-{
-	t_shell	shell;
-
-	(void) argc;
-	(void) argv;
-	ms_init_resources(&shell, env);
-	ms_configure_signals();
-	ms_read_loop(&shell);
-	ms_free_resources(&shell);
-	return (EXIT_SUCCESS);
+void	ms_init_resources(t_shell *shell, char **env)
+{		
+	ms_init_env(shell, env);
+	ms_init_history(shell);
+	ms_load_history(shell);
 }

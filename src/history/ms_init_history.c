@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_main.c                                          :+:      :+:    :+:   */
+/*   ms_init_history.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
@@ -11,15 +11,10 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **env)
+void	ms_init_history(t_shell *shell)
 {
-	t_shell	shell;
-
-	(void) argc;
-	(void) argv;
-	ms_init_resources(&shell, env);
-	ms_configure_signals();
-	ms_read_loop(&shell);
-	ms_free_resources(&shell);
-	return (EXIT_SUCCESS);
+	shell->history = (char **) ft_calloc(1, sizeof(char *));
+	if (!shell->history)
+		return ;
+	shell->history[0] = NULL;
 }
