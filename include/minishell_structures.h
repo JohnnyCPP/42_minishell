@@ -46,4 +46,18 @@ typedef struct s_shell
 	t_token_list	*tokens;
 }	t_shell;
 
+typedef struct s_redir
+{
+	t_token_type	type;
+	char			*filename;
+	int				new_fd;
+	int				old_fd;
+}	t_redir;
+
+typedef struct s_redir_list
+{
+	t_redir	*redirs;
+	int		length;
+}	t_redir_list;
+
 #endif
