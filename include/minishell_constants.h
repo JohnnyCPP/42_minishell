@@ -19,6 +19,8 @@
 # define ERR_EXPORT_TAIL "': not a valid identifier\n"
 # define ERR_OLDPWD "Error: OLDPWD not set\n"
 # define ERR_HOME "Error: HOME not set\n"
+# define ERR_SYNTAX_HEAD "Error: syntax error near unexpected token `"
+# define ERR_SYNTAX_TAIL "'"
 # define ERR_EXECVE_HEAD "Error: "
 # define ERR_EXECVE_TAIL ": no such file or directory\n"
 # define ERR_PERM_DENIED ": permission denied\n"
@@ -107,14 +109,28 @@
 // used by history functionality to persist history across sessions
 # define FILE_HISTORY ".minishell_history"
 
+// used by readline() to wait for input during heredoc
+# define HEREDOC_PROMPT "> "
+
+// used by pipe() to create an IPC channel
+# define PIPE_FD_AMOUNT 2
+# define PIPE_WRITE_END 1
+# define PIPE_READ_END 0
+
 // returned by open() when a file does not exist
 # define DOES_NOT_EXIST -1
 
-// used by open() to create a new history file
+// default value for the fd of a redirection
+# define NO_FILE_DESCRIPTOR -1
+
+// used by open() to create a new history file and for redirections
 # define MODE_RW 0644
 
 // used to drive the repl loop
 # define ACT_BREAK "break"
 # define ACT_CONTINUE "continue"
+
+// used by ms_redir_errors() when a syntax error occurs
+# define DEFAULT_LEXEME "newline"
 
 #endif

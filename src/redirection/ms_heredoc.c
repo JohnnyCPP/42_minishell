@@ -13,4 +13,25 @@
 
 int	ms_heredoc(char *delimiter)
 {
+	char	*line;
+	int		pipe_fd[PIPE_FD_AMOUNT];
+
+	if (pipe(pipe_fd) == FAIL)
+		return (EXIT_FAILURE);
+	while (TRUE)
+	{
+		line = readline(HEREDOC_PROMPT);
+		if (!line)
+			break ;
+		if (!ft_strcmp(line, delimiter))
+		{
+			free(line);
+			break ;
+		}
+		write(pipe_fd[PIPE_WRITE_END], line, ft_strlen(line));
+		write(pipe_fd[PIPE_WRITE_END], "\n", 1);
+		free(line);
+	}
+	close(pipe_fd[PIPE_WRITE_END]);
+	return (pipe_fd[PIPE_READ_END]);
 }

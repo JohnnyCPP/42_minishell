@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_free_redirs.c                                   :+:      :+:    :+:   */
+/*   ms_get_valid_path.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:05:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/04/29 23:05:34 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:16:55 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-void	ms_free_redirs(t_redir_list **list)
+char	*ms_get_valid_path(t_shell *shell, const char *lexeme, int *error_code)
 {
-	int	i;
+	char	*cmd_path;
 
-	if (!list || !*list)
-		return ;
-	i = 0;
-	while (i < (*list)->length)
+	cmd_path = ms_get_path(shell, lexeme);
+	*error_code = ms_is_path_valid(cmd_path, lexeme);
+	if (*error_code)
 	{
-		if ((*list)->redirs[i].filename)
-			free((*list)->redirs[i].filename);
-		i ++;
+		free(cmd_path);
+		return (NULL);
 	}
-	free((*list)->redirs);
-	free(*list);
-	*list = NULL;
+	return (cmd_path);
 }

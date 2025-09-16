@@ -544,4 +544,63 @@ int		ms_is_path_valid(char *cmd_path, const char *lexeme);
   */
 char	*ms_get_prompt(void);
 
+/**
+  * @brief Prints an error message when an unexpected token is found.
+  *
+  * @param token The unexpected token.
+  */
+void	ms_syntax_error(const t_token *token);
+
+/**
+  * @brief Recalculates tail of shell environment.
+  *
+  * @param shell The shell environment.
+  */
+void	ms_recalc_tail(t_shell *shell);
+
+/**
+  * @brief Reads user input until a line with only "delimiter".
+  *
+  * @param delimiter A string that determines the end of user input.
+  * 
+  * @return A file descriptor to the content read from the user.
+  *         Returns EXIT_FAILURE if an error occurs.
+  */
+int		ms_heredoc(char *delimiter);
+
+/**
+  * @brief Iterates through a list of redirs, applying them.
+  *
+  * @param list The list of redirs.
+  * 
+  * @return EXIT_SUCCESS if redirections are applied,
+  *         EXIT_FAILURE if an error occurs.
+  */
+int		ms_apply_redirs(t_redir_list *list);
+
+/**
+  * @brief Reverts file descriptors from a list of redirs.
+  *
+  * @param list The list of redirs.
+  */
+void	ms_revert_redirs(t_redir_list *list);
+
+/**
+  * @brief Frees memory from a list of redirs.
+  *
+  * @param list The list of redirs.
+  */
+void	ms_free_redirs(t_redir_list **list);
+
+/**
+  * @brief Gets a validated path.
+  *
+  * @param shell The shell environment.
+  * @param lexeme The current lexeme.
+  * @param error_code In case of failure, the error code is stored here.
+  *
+  * @return The path to "lexeme".
+  */
+char	*ms_get_valid_path(t_shell *shell, const char *lexeme, int *error_code);
+
 #endif

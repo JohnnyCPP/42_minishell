@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_free_redirs.c                                   :+:      :+:    :+:   */
+/*   ms_redir_errors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:05:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/04/29 23:05:34 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:16:55 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-void	ms_free_redirs(t_redir_list **list)
+void	ms_syntax_error(const t_token *token)
 {
-	int	i;
+	char	*error;
+	char	*lexeme;
 
-	if (!list || !*list)
-		return ;
-	i = 0;
-	while (i < (*list)->length)
-	{
-		if ((*list)->redirs[i].filename)
-			free((*list)->redirs[i].filename);
-		i ++;
-	}
-	free((*list)->redirs);
-	free(*list);
-	*list = NULL;
+	if (!token || !token->lexeme)
+		lexeme = DEFAULT_LEXEME;
+	else
+		lexeme = token->lexeme;
+	error = ms_concat(ERR_SYNTAX_HEAD, lexeme, ERR_SYNTAX_TAIL);
+	ms_puterr(error);
+	free(error);
 }

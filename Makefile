@@ -23,6 +23,7 @@ EXT_PATH		= ${SRC_PATH}external/
 HIST_PATH		= ${SRC_PATH}history/
 LEX_PATH		= ${SRC_PATH}lexical_analysis/
 LIB_PATH		= ${SRC_PATH}lib/
+REDIR_PATH		= ${SRC_PATH}redirection/
 REPL_PATH		= ${SRC_PATH}repl/
 RESRC_PATH		= ${SRC_PATH}resources/
 SIGNAL_PATH		= ${SRC_PATH}signal/
@@ -120,6 +121,7 @@ ENV_SRC_FILES	= ms_envlen.c \
 				  ms_set_var.c \
 				  ms_unset_var.c
 EXT_SRC_FILES	= ms_get_path.c \
+				  ms_get_valid_path.c \
 				  ms_is_path_valid.c \
 				  ms_path_errors.c \
 				  ms_run_external.c \
@@ -133,6 +135,13 @@ LEX_SRC_FILES	= ms_char.c \
 				  ms_get_tokens.c \
 				  ms_lexical_analysis.c \
 				  ms_redirection_analysis.c
+REDIR_SRC_FILES	= ms_apply_redirs.c \
+				  ms_free_redirs.c \
+				  ms_get_redirs.c \
+				  ms_heredoc.c \
+				  ms_recalc_tail.c \
+				  ms_redir_errors.c \
+				  ms_revert_redirs.c
 REPL_SRC_FILES	= ms_evaluate.c \
 				  ms_read_loop.c \
 				  ms_run_command.c
@@ -156,6 +165,7 @@ ENV_SRCS		= $(addprefix ${ENV_PATH}, ${ENV_SRC_FILES})
 EXT_SRCS		= $(addprefix ${EXT_PATH}, ${EXT_SRC_FILES})
 HIST_SRCS		= $(addprefix ${HIST_PATH}, ${HIST_SRC_FILES})
 LEX_SRCS		= $(addprefix ${LEX_PATH}, ${LEX_SRC_FILES})
+REDIR_SRCS		= $(addprefix ${REDIR_PATH}, ${REDIR_SRC_FILES})
 REPL_SRCS		= $(addprefix ${REPL_PATH}, ${REPL_SRC_FILES})
 RESRC_SRCS		= $(addprefix ${RESRC_PATH}, ${RESRC_SRC_FILES})
 SIGNAL_SRCS		= $(addprefix ${SIGNAL_PATH}, ${SGNAL_SRC_FILES})
@@ -167,6 +177,7 @@ SRC_FILES		= ${ROOT_SRCS} \
 				  ${EXT_SRCS} \
 				  ${HIST_SRCS} \
 				  ${LEX_SRCS} \
+				  ${REDIR_SRCS} \
 				  ${REPL_SRCS} \
 				  ${RESRC_SRCS} \
 				  ${SIGNAL_SRCS} \

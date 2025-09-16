@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_free_redirs.c                                   :+:      :+:    :+:   */
+/*   ms_recalc_tail.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
@@ -11,20 +11,17 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-void	ms_free_redirs(t_redir_list **list)
+void	ms_recalc_tail(t_shell *shell)
 {
-	int	i;
+	t_token	*current;
 
-	if (!list || !*list)
-		return ;
-	i = 0;
-	while (i < (*list)->length)
+	current = shell->tokens->head;
+	if (current)
 	{
-		if ((*list)->redirs[i].filename)
-			free((*list)->redirs[i].filename);
-		i ++;
+		while (current->next)
+			current = current->next;
+		shell->tokens->tail = current;
 	}
-	free((*list)->redirs);
-	free(*list);
-	*list = NULL;
+	else
+		shell->tokens->tail = NULL;
 }

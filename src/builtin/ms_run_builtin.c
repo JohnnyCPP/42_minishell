@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-int	ms_run_builtin(t_shell *shell, const char *lexeme)
+static	int	ms_find_builtin(t_shell *shell, const char *lexeme)
 {
 	if (!shell->tokens || !shell->tokens->head || !lexeme)
 		return (STD_RET_KO);
@@ -30,4 +30,23 @@ int	ms_run_builtin(t_shell *shell, const char *lexeme)
 	if (!ft_strcmp(lexeme, CMD_UNSET))
 		return (ms_unset(shell));
 	return (STD_RET_KO);
+}
+
+int	ms_run_builtin(t_shell *shell, const char *lexeme)
+{
+	t_redir_list	*list;
+	int				status_code;
+
+	list = ms_get_redirs(shell);
+	if (!list)
+		return (STD_RET_KO);
+	if (ms_apply_redirs(list) == EXIT_FAILURE)
+	{
+		ms_free_redirs(&list);
+		return (STD_RET_KO);
+	}
+	status_code = ms_find_builtin(shell, lexeme);
+	ms_revert_redirs(list);
+	ms_free_redirs(&list);
+	return (status_code);
 }

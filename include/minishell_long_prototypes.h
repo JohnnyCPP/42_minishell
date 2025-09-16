@@ -64,4 +64,24 @@ t_token_list	*ms_create_token_list(void);
   */
 t_token_list	*ms_get_tokens(const char *input);
 
+/**
+  * @brief Gets a list of redirections from a list of tokens.
+  *
+  * @param shell The shell environment where the list of tokens is.
+  * 
+  * @return If success, returns the list of redirections.
+  *         If memory allocation fails, returns NULL.
+  *         If syntax error occurs, returns NULL.
+  * 
+  * Allocates memory for a list of redirections, iterates through 
+  * the list of tokens, initializes each redirection with its type 
+  * and value, and frees the tokens from the token list that are 
+  * identified as redirections.
+  * 
+  * If a syntax error occurs, prints an error message.
+  * 
+  * At the end, recalculates the tail of the list of tokens.
+  */
+t_redir_list	*ms_get_redirs(t_shell *shell);
+
 #endif
