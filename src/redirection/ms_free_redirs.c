@@ -11,12 +11,13 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-void	ms_free_redirs(t_redir_list **list)
+int	ms_free_redirs(t_redir_list **list)
 {
 	int	i;
 
 	if (!list || !*list)
-		return ;
+		return (STD_RET_KO);
+	ms_revert_redirs(*list);
 	i = 0;
 	while (i < (*list)->length)
 	{
@@ -27,4 +28,5 @@ void	ms_free_redirs(t_redir_list **list)
 	free((*list)->redirs);
 	free(*list);
 	*list = NULL;
+	return (STD_RET_KO);
 }

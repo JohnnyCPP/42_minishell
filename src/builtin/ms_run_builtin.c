@@ -41,12 +41,8 @@ int	ms_run_builtin(t_shell *shell, const char *lexeme)
 	if (!list)
 		return (STD_RET_KO);
 	if (ms_apply_redirs(list) == EXIT_FAILURE)
-	{
-		ms_free_redirs(&list);
-		return (STD_RET_KO);
-	}
+		return (ms_free_redirs(&list));
 	status_code = ms_find_builtin(shell, lexeme);
-	ms_revert_redirs(list);
 	ms_free_redirs(&list);
 	return (status_code);
 }

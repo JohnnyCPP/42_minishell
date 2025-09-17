@@ -13,59 +13,64 @@
 
 static	int	ms_apply_heredoc(t_redir *redir)
 {
-	redir->new_fd = ms_heredoc(redir->filename);
-	if (redir->new_fd == FAIL)
+	int	heredoc_fd;
+
+	heredoc_fd = ms_heredoc(redir->filename);
+	if (heredoc_fd == FAIL)
 		return (EXIT_FAILURE);
-	redir->old_fd = dup(STDIN_FILENO);
-	dup2(redir->new_fd, STDIN_FILENO);
+	dup2(heredoc_fd, STDIN_FILENO);
+	close(heredoc_fd);
 	return (EXIT_SUCCESS);
 }
 
 static	int	ms_apply_apnd(t_redir *redir)
 {
 	int	flags;
+	int	file_fd;
 
 	flags = O_WRONLY | O_CREAT | O_APPEND;
-	redir->new_fd = open(redir->filename, flags, MODE_RW);
-	if (redir->new_fd == FAIL)
+	file_fd = open(redir->filename, flags, MODE_RW);
+	if (file_fd == FAIL)
 	{
 		perror(redir->filename);
 		return (EXIT_FAILURE);
 	}
-	redir->old_fd = dup(STDOUT_FILENO);
-	dup2(redir->new_fd, STDOUT_FILENO);
+	dup2(file_fd, STDOUT_FILENO);
+	close(file_fd);
 	return (EXIT_SUCCESS);
 }
 
 static	int	ms_apply_out(t_redir *redir)
 {
 	int	flags;
+	int	file_fd;
 
 	flags = O_WRONLY | O_CREAT | O_TRUNC;
-	redir->new_fd = open(redir->filename, flags, MODE_RW);
-	if (redir->new_fd == FAIL)
+	file_fd = open(redir->filename, flags, MODE_RW);
+	if (file_fd == FAIL)
 	{
 		perror(redir->filename);
 		return (EXIT_FAILURE);
 	}
-	redir->old_fd = dup(STDOUT_FILENO);
-	dup2(redir->new_fd, STDOUT_FILENO);
+	dup2(file_fd, STDOUT_FILENO);
+	close(file_fd);
 	return (EXIT_SUCCESS);
 }
 
 static	int	ms_apply_in(t_redir *redir)
 {
 	int	flags;
+	int	file_fd;
 
 	flags = O_RDONLY;
-	redir->new_fd = open(redir->filename, flags);
-	if (redir->new_fd == FAIL)
+	file_fd = open(redir->filename, flags);
+	if (file_fd == FAIL)
 	{
 		perror(redir->filename);
 		return (EXIT_FAILURE);
 	}
-	redir->old_fd = dup(STDIN_FILENO);
-	dup2(redir->new_fd, STDIN_FILENO);
+	dup2(file_fd, STDIN_FILENO);
+	close(file_fd);
 	return (EXIT_SUCCESS);
 }
 
@@ -75,6 +80,8 @@ int	ms_apply_redirs(t_redir_list *list)
 	int		status;
 	int		i;
 
+	list->stdin = dup(STDIN_FILENO);
+	list->stdout = dup(STDOUT_FILENO);
 	status = EXIT_SUCCESS;
 	i = 0;
 	while (i < list->length)

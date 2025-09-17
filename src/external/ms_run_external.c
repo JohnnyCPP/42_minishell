@@ -65,16 +65,12 @@ int	ms_run_external(t_shell *shell, const char *lexeme)
 	if (!list)
 		return (STD_RET_KO);
 	if (ms_apply_redirs(list) == EXIT_FAILURE)
-	{
-		ms_free_redirs(&list);
-		return (STD_RET_KO);
-	}
+		return (ms_free_redirs(&list));
 	error_code = 0;
 	cmd_path = ms_get_valid_path(shell, lexeme, &error_code);
 	if (!cmd_path)
 		return (error_code);
 	exit_status = ms_execute_cmd(shell, cmd_path);
-	ms_revert_redirs(list);
 	ms_free_redirs(&list);
 	return (exit_status);
 }

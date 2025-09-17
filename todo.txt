@@ -31,7 +31,7 @@
 - When process ends, append history to file
 - When process ends, clear history with rl_clear_history()
 
-[ ]	STEP 3: redirections & heredoc
+[x]	STEP 3: redirections & heredoc
 [ ]	This functionality is covered by unit tests
 
 - Use open(), dup2(), close() to redirect stdin/stdout

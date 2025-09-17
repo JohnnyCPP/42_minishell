@@ -589,8 +589,10 @@ void	ms_revert_redirs(t_redir_list *list);
   * @brief Frees memory from a list of redirs.
   *
   * @param list The list of redirs.
+  *
+  * @return Always STD_RET_KO.
   */
-void	ms_free_redirs(t_redir_list **list);
+int		ms_free_redirs(t_redir_list **list);
 
 /**
   * @brief Gets a validated path.

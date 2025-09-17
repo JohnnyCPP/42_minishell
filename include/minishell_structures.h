@@ -50,14 +50,14 @@ typedef struct s_redir
 {
 	t_token_type	type;
 	char			*filename;
-	int				new_fd;
-	int				old_fd;
 }	t_redir;
 
 typedef struct s_redir_list
 {
 	t_redir	*redirs;
 	int		length;
+	int		stdin;
+	int		stdout;
 }	t_redir_list;
 
 #endif
