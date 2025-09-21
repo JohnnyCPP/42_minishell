@@ -60,4 +60,10 @@ typedef struct s_redir_list
 	int		stdout;
 }	t_redir_list;
 
+typedef struct s_pipeline
+{
+	t_token_list	**commands;
+	int				length;
+}	t_pipeline;
+
 #endif

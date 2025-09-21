@@ -23,6 +23,7 @@ EXT_PATH		= ${SRC_PATH}external/
 HIST_PATH		= ${SRC_PATH}history/
 LEX_PATH		= ${SRC_PATH}lexical_analysis/
 LIB_PATH		= ${SRC_PATH}lib/
+PIPE_PATH		= ${SRC_PATH}pipe/
 REDIR_PATH		= ${SRC_PATH}redirection/
 REPL_PATH		= ${SRC_PATH}repl/
 RESRC_PATH		= ${SRC_PATH}resources/
@@ -135,6 +136,7 @@ LEX_SRC_FILES	= ms_char.c \
 				  ms_get_tokens.c \
 				  ms_lexical_analysis.c \
 				  ms_redirection_analysis.c
+PIPE_SRC_FILES	=
 REDIR_SRC_FILES	= ms_apply_redirs.c \
 				  ms_free_redirs.c \
 				  ms_get_redirs.c \
@@ -165,6 +167,7 @@ ENV_SRCS		= $(addprefix ${ENV_PATH}, ${ENV_SRC_FILES})
 EXT_SRCS		= $(addprefix ${EXT_PATH}, ${EXT_SRC_FILES})
 HIST_SRCS		= $(addprefix ${HIST_PATH}, ${HIST_SRC_FILES})
 LEX_SRCS		= $(addprefix ${LEX_PATH}, ${LEX_SRC_FILES})
+PIPE_SRCS		= $(addprefix ${PIPE_PATH}, ${PIPE_SRC_FILES})
 REDIR_SRCS		= $(addprefix ${REDIR_PATH}, ${REDIR_SRC_FILES})
 REPL_SRCS		= $(addprefix ${REPL_PATH}, ${REPL_SRC_FILES})
 RESRC_SRCS		= $(addprefix ${RESRC_PATH}, ${RESRC_SRC_FILES})
@@ -177,6 +180,7 @@ SRC_FILES		= ${ROOT_SRCS} \
 				  ${EXT_SRCS} \
 				  ${HIST_SRCS} \
 				  ${LEX_SRCS} \
+				  ${PIPE_SRCS} \
 				  ${REDIR_SRCS} \
 				  ${REPL_SRCS} \
 				  ${RESRC_SRCS} \
