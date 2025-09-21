@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_free_pipeline.c                                 :+:      :+:    :+:   */
+/*   ms_pipeline.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
@@ -11,20 +11,11 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-void	ms_free_pipeline(t_pipeline **pipeline)
+void	ms_pipeline(t_shell *shell)
 {
-	int	i;
-
-	if (!pipeline || !*pipeline)
+	if (ms_is_pipesyntax_valid(shell) == FALSE)
 		return ;
-	i = 0;
-	while (i < (*pipeline)->length)
-	{
-		if ((*pipeline)->commands[i])
-			ms_delete_tokens(&(*pipeline)->commands[i]);
-		i ++;
-	}
-	free((*pipeline)->commands);
-	free(*pipeline);
-	*pipeline = NULL;
+	ms_get_pipeline(shell);
+	shell->exit_code = ms_run_pipeline(shell, shell->pipeline);
+	ms_free_pipeline(&shell->pipeline);
 }

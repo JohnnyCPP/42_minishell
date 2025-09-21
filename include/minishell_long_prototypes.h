@@ -12,9 +12,6 @@
 #ifndef MINISHELL_LONG_PROTOTYPES_H
 # define MINISHELL_LONG_PROTOTYPES_H
 
-# include "minishell_structures.h"
-# include "signal.h"
-
 /**
   * @brief Gets the current signal value.
   *

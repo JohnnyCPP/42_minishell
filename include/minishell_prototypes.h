@@ -12,9 +12,6 @@
 #ifndef MINISHELL_PROTOTYPES_H
 # define MINISHELL_PROTOTYPES_H
 
-# include "minishell_structures.h"
-# include "libft.h"
-
 /**
   * @brief Handler responsible for redisplaying the prompt when pressing Ctrl+C.
   *
@@ -104,6 +101,15 @@ void	ms_free_tokens(t_token_list *tokens);
   * and assigns the memory location of the list to NULL.
   */
 void	ms_delete_tokens(t_token_list **tokens);
+
+/**
+  * @brief Adds a new token to a list of tokens.
+  *
+  * @param list The list of tokens.
+  * @param type The type of the new token.
+  * @param lexeme The lexeme of the new token.
+  */
+void	ms_append_token(t_token_list *list, t_token_type type, char *lexeme);
 
 /**
   * @brief Checks that all tokens in a list are considered valid.
@@ -604,5 +610,70 @@ int		ms_free_redirs(t_redir_list **list);
   * @return The path to "lexeme".
   */
 char	*ms_get_valid_path(t_shell *shell, const char *lexeme, int *error_code);
+
+/**
+  * @brief Counts the amount of pipes in a list of tokens.
+  *
+  * @param list The list of tokens.
+  *
+  * @return The amount of pipes in the list.
+  */
+int		ms_count_pipes(t_token_list *list);
+
+/**
+  * @brief Frees a pipeline and each list of commands associated with it.
+  *
+  * @param pipeline The pipeline to be freed.
+  */
+void	ms_free_pipeline(t_pipeline **pipeline);
+
+/**
+  * @brief Gets a pipeline in the shell environment.
+  *
+  * @param shell The shell environment.
+  *
+  * @return EXIT_SUCCESS if the pipeline is retrieved, 
+  *         EXIT_FAILURE if memory allocation errors occur.
+  *
+  * This function populates the t_shell with a pipeline, iterating 
+  * through the list of tokens, extracting commands delimited by pipes.
+  */
+int		ms_get_pipeline(t_shell *shell);
+
+/**
+  * @brief Checks if a list of tokens contains a pipe.
+  *
+  * @param list The list of tokens.
+  *
+  * @return TRUE if the list has a pipe, FALSE otherwise.
+  */
+int		ms_has_pipe(t_token_list *list);
+
+/**
+  * @brief Runs commands from a pipeline swapping data streams.
+  *
+  * @param shell The shell environment.
+  * @param pipeline The pipeline to run.
+  *
+  * @return The exit code of the last command of the pipeline if success, 
+  *         or STD_RET_KO if an error occurs.
+  */
+int		ms_run_pipeline(t_shell *shell, t_pipeline *pipeline);
+
+/**
+  * @brief Encapsulates the logic to run a pipeline.
+  *
+  * @param shell The shell environment.
+  */
+void	ms_pipeline(t_shell *shell);
+
+/**
+  * @brief Verifies pipe syntax of a list of tokens.
+  *
+  * @param shell The shell environment.
+  *
+  * @return TRUE if the syntax is correct, FALSE otherwise.
+  */
+int		ms_is_pipesyntax_valid(t_shell *shell);
 
 #endif

@@ -136,7 +136,13 @@ LEX_SRC_FILES	= ms_char.c \
 				  ms_get_tokens.c \
 				  ms_lexical_analysis.c \
 				  ms_redirection_analysis.c
-PIPE_SRC_FILES	=
+PIPE_SRC_FILES	= ms_count_pipes.c \
+				  ms_free_pipeline.c \
+				  ms_get_pipeline.c \
+				  ms_has_pipe.c \
+				  ms_is_pipesyntax_valid.c \
+				  ms_pipeline.c \
+				  ms_run_pipeline.c
 REDIR_SRC_FILES	= ms_apply_redirs.c \
 				  ms_free_redirs.c \
 				  ms_get_redirs.c \
@@ -156,7 +162,8 @@ STR_SRC_FILES	= ms_concat.c \
 				  ms_get_prompt.c \
 				  ms_is_path.c \
 				  ms_puterr.c
-TOKEN_SRC_FILES	= ms_get_var_len.c \
+TOKEN_SRC_FILES	= ms_append_token.c \
+				  ms_get_var_len.c \
 				  ms_get_var_value.c \
 				  ms_strip_quotes.c \
 				  ms_token.c \

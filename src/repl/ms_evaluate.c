@@ -26,6 +26,9 @@ void	ms_evaluate(t_shell *shell)
 		return ;
 	}
 	ms_strip_quotes(shell);
-	ms_run_command(shell);
+	if (ms_has_pipe(shell->tokens))
+		ms_pipeline(shell);
+	else
+		ms_run_command(shell);
 	ms_delete_tokens(&shell->tokens);
 }

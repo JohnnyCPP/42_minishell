@@ -20,7 +20,7 @@
 # define ERR_OLDPWD "Error: OLDPWD not set\n"
 # define ERR_HOME "Error: HOME not set\n"
 # define ERR_SYNTAX_HEAD "Error: syntax error near unexpected token `"
-# define ERR_SYNTAX_TAIL "'"
+# define ERR_SYNTAX_TAIL "'\n"
 # define ERR_EXECVE_HEAD "Error: "
 # define ERR_EXECVE_TAIL ": no such file or directory\n"
 # define ERR_PERM_DENIED ": permission denied\n"
@@ -31,6 +31,8 @@
 # define ERR_SIGQUIT "signal (SIGQUIT)"
 # define ERR_GETCWD "getcwd"
 # define ERR_EXECVE "execve"
+# define ERR_WAITPID "waitpid"
+# define ERR_PIPE "pipe"
 
 // notifies the user of a successful termination
 # define MSG_EXIT_SHELL "exit\n"
@@ -101,6 +103,9 @@
 
 // a child process id is zero
 # define PROC_CHILD 0
+
+// used with waitpid()
+# define NO_OPTIONS 0
 
 // configures the behavior of waitpid()
 // 0 = wait for the child to die

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_free_pipeline.c                                 :+:      :+:    :+:   */
+/*   ms_count_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
@@ -11,20 +11,18 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-void	ms_free_pipeline(t_pipeline **pipeline)
+int	ms_count_pipes(t_token_list *list)
 {
-	int	i;
+	t_token	*current;
+	int		i;
 
-	if (!pipeline || !*pipeline)
-		return ;
+	current = list->head;
 	i = 0;
-	while (i < (*pipeline)->length)
+	while (current)
 	{
-		if ((*pipeline)->commands[i])
-			ms_delete_tokens(&(*pipeline)->commands[i]);
-		i ++;
+		if (current->type == T_PIPE)
+			i ++;
+		current = current->next;
 	}
-	free((*pipeline)->commands);
-	free(*pipeline);
-	*pipeline = NULL;
+	return (i);
 }
