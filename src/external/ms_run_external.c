@@ -54,7 +54,7 @@ static	int	ms_execute_cmd(t_shell *shell, char *cmd_path)
 	return (ms_execute_parent(child, cmd_path, argv));
 }
 
-int	ms_run_external(t_shell *shell, const char *lexeme)
+int	ms_run_external(t_shell *shell, const char *lexeme, int is_child)
 {
 	t_redir_list	*list;
 	char			*cmd_path;
@@ -63,14 +63,28 @@ int	ms_run_external(t_shell *shell, const char *lexeme)
 
 	list = ms_get_redirs(shell);
 	if (!list)
+	{
+		if (is_child)
+			ms_free_childres(shell);
 		return (STD_RET_KO);
+	}
 	if (ms_apply_redirs(list) == EXIT_FAILURE)
+	{
+		if (is_child)
+			ms_free_childres(shell);
 		return (ms_free_redirs(&list));
+	}
 	error_code = 0;
 	cmd_path = ms_get_valid_path(shell, lexeme, &error_code);
 	if (!cmd_path)
+	{
+		if (is_child)
+			ms_free_childres(shell);
 		return (error_code);
+	}
 	exit_status = ms_execute_cmd(shell, cmd_path);
 	ms_free_redirs(&list);
+	if (is_child)
+		ms_free_childres(shell);
 	return (exit_status);
 }

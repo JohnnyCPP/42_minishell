@@ -147,6 +147,15 @@ int		ms_iswhitespace(const char c);
 int		ms_isredirection(const char c);
 
 /**
+  * @brief Checks if a token is a redirection.
+  *
+  * @param token The token to check.
+  *
+  * @return TRUE if is a redirection, FALSE otherwise.
+  */
+int		ms_is_redirtoken(t_token *token);
+
+/**
   * @brief Checks if a character is a separator.
   *
   * @param C The character to be checked.
@@ -259,11 +268,12 @@ int		ms_is_builtin(const char *lexeme);
   *
   * @param shell The shell env where the tokens are located.
   * @param lexeme A lexeme that may represent a built-in command.
+  * @param is_child TRUE or FALSE.
   *
   * @return The return status of the built-in run, 
   *         or STD_RET_KO if the command does not run.
   */
-int		ms_run_builtin(t_shell *shell, const char *lexeme);
+int		ms_run_builtin(t_shell *shell, const char *lexeme, int is_child);
 
 /**
   * @brief Changes the working directory, updating PWD and OLDPWD.
@@ -411,11 +421,12 @@ int		ms_unset_var(t_shell *shell, const char *name);
   *
   * @param shell The shell env where the tokens are located.
   * @param lexeme A lexeme that may represent an external command.
+  * @param is_child TRUE or FALSE.
   *
   * @return The return status of the command run, 
   *         or STD_RET_KO if the command does not run.
   */
-int		ms_run_external(t_shell *shell, const char *lexeme);
+int		ms_run_external(t_shell *shell, const char *lexeme, int is_child);
 
 /**
   * @brief Converts a list of tokens to a list of strings.
@@ -675,5 +686,12 @@ void	ms_pipeline(t_shell *shell);
   * @return TRUE if the syntax is correct, FALSE otherwise.
   */
 int		ms_is_pipesyntax_valid(t_shell *shell);
+
+/**
+  * @brief Frees resources from a child.
+  *
+  * @param shell The shell environment.
+  */
+void	ms_free_childres(t_shell *shell);
 
 #endif

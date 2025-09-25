@@ -137,6 +137,7 @@ LEX_SRC_FILES	= ms_char.c \
 				  ms_lexical_analysis.c \
 				  ms_redirection_analysis.c
 PIPE_SRC_FILES	= ms_count_pipes.c \
+				  ms_free_childres.c \
 				  ms_free_pipeline.c \
 				  ms_get_pipeline.c \
 				  ms_has_pipe.c \
@@ -147,6 +148,7 @@ REDIR_SRC_FILES	= ms_apply_redirs.c \
 				  ms_free_redirs.c \
 				  ms_get_redirs.c \
 				  ms_heredoc.c \
+				  ms_is_redirtoken.c \
 				  ms_recalc_tail.c \
 				  ms_redir_errors.c \
 				  ms_revert_redirs.c
