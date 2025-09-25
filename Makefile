@@ -150,6 +150,7 @@ REDIR_SRC_FILES	= ms_apply_redirs.c \
 				  ms_heredoc.c \
 				  ms_is_redirtoken.c \
 				  ms_recalc_tail.c \
+				  ms_redir_epilogue.c \
 				  ms_redir_errors.c \
 				  ms_revert_redirs.c
 REPL_SRC_FILES	= ms_evaluate.c \

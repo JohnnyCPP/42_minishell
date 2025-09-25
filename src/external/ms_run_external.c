@@ -61,19 +61,8 @@ int	ms_run_external(t_shell *shell, const char *lexeme, int is_child)
 	int				error_code;
 	int				exit_status;
 
-	list = ms_get_redirs(shell);
-	if (!list)
-	{
-		if (is_child)
-			ms_free_childres(shell);
+	if (ms_redir_epilogue(shell, &list, is_child) == EXIT_FAILURE)
 		return (STD_RET_KO);
-	}
-	if (ms_apply_redirs(list) == EXIT_FAILURE)
-	{
-		if (is_child)
-			ms_free_childres(shell);
-		return (ms_free_redirs(&list));
-	}
 	error_code = 0;
 	cmd_path = ms_get_valid_path(shell, lexeme, &error_code);
 	if (!cmd_path)

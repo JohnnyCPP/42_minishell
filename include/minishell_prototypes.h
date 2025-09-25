@@ -694,4 +694,15 @@ int		ms_is_pipesyntax_valid(t_shell *shell);
   */
 void	ms_free_childres(t_shell *shell);
 
+/**
+  * @brief Gets a list of redirections managing memory allocation errors.
+  *
+  * @param shell The shell environment.
+  * @param list The list of redirections to populate.
+  * @param is_child TRUE or FALSE.
+  *
+  * @return EXIT_SUCCESS if the list was populated, otherwise EXIT_FAILURE.
+  */
+int		ms_redir_epilogue(t_shell *shell, t_redir_list **list, int is_child);
+
 #endif

@@ -135,6 +135,12 @@
 # define ACT_BREAK "break"
 # define ACT_CONTINUE "continue"
 
+// used to drive the heredoc loop
+# define HEREDOC_CONTINUE 0
+# define HEREDOC_END 1
+# define READLINE_FINISHED 1
+# define READLINE_NOT_FINISHED 0
+
 // used by ms_redir_errors() when a syntax error occurs
 # define DEFAULT_LEXEME "newline"
 
