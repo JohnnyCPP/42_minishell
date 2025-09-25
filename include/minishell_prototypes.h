@@ -694,4 +694,9 @@ void	ms_free_childres(t_shell *shell);
   */
 int		ms_redir_epilogue(t_shell *shell, t_redir_list **list, int is_child);
 
+/**
+  * @brief Sets a handler that does not redisplay readline.
+  */
+void	ms_set_noprompt_handler(void);
+
 #endif

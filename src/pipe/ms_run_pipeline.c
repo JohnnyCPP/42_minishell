@@ -24,6 +24,7 @@ void	ms_wait_children(t_pipeline *pipeline, int *status, pid_t **children)
 	}
 	free(*children);
 	*children = NULL;
+	ms_configure_signals();
 }
 
 void	ms_swap_pipes(int i, t_pipeline *pipeline, int *prev, int *next)
@@ -94,6 +95,7 @@ int	ms_run_pipeline(t_shell *shell, t_pipeline *pipeline)
 	{
 		if (ms_new_pipe(i, pipe_next, pipeline, &children) == STD_RET_KO)
 			return (STD_RET_KO);
+		ms_set_noprompt_handler();
 		children[i] = fork();
 		if (children[i] == PROC_CHILD)
 			ms_run_children(shell, i, pipe_prev, pipe_next);

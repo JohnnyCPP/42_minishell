@@ -16,6 +16,7 @@ static	int	ms_execute_parent(pid_t child, char *cmd_path, char **argv)
 	int	child_status;
 
 	waitpid(child, &child_status, WAIT_FOR_CHILD);
+	ms_configure_signals();
 	free(cmd_path);
 	ms_free_strings(argv);
 	return (WEXITSTATUS(child_status));
@@ -37,8 +38,8 @@ static	int	ms_child_failed(char *cmd_path, char **argv)
 
 static	int	ms_execute_cmd(t_shell *shell, char *cmd_path)
 {
-	char	**argv;
-	pid_t	child;
+	char				**argv;
+	pid_t				child;
 
 	argv = ms_to_argv(shell->tokens);
 	if (!argv)
@@ -46,6 +47,7 @@ static	int	ms_execute_cmd(t_shell *shell, char *cmd_path)
 		free(cmd_path);
 		return (STD_RET_KO);
 	}
+	ms_set_noprompt_handler();
 	child = fork();
 	if (child == FAIL)
 		return (ms_child_failed(cmd_path, argv));
