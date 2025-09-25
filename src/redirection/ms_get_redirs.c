@@ -94,7 +94,6 @@ t_redir_list	*ms_get_redirs(t_shell *shell)
 	if (!list)
 		return (NULL);
 	list->length = ms_get_redirslen(shell->tokens->head);
-	list->redirs = NULL;
 	list->stdin = NO_FILE_DESCRIPTOR;
 	list->stdout = NO_FILE_DESCRIPTOR;
 	if (!list->length)

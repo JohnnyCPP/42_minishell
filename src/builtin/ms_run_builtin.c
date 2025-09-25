@@ -32,7 +32,7 @@ static	int	ms_find_builtin(t_shell *shell, const char *lexeme)
 	return (STD_RET_KO);
 }
 
-int	ms_run_builtin(t_shell *shell, const char *lexeme, int is_child)
+int	ms_run_builtin(t_shell *shell, int is_child)
 {
 	t_redir_list	*list;
 	int				status_code;
@@ -50,7 +50,7 @@ int	ms_run_builtin(t_shell *shell, const char *lexeme, int is_child)
 			ms_free_childres(shell);
 		return (ms_free_redirs(&list));
 	}
-	status_code = ms_find_builtin(shell, lexeme);
+	status_code = ms_find_builtin(shell, shell->tokens->head->lexeme);
 	ms_free_redirs(&list);
 	if (is_child)
 		ms_free_childres(shell);

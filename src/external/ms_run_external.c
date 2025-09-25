@@ -54,26 +54,26 @@ static	int	ms_execute_cmd(t_shell *shell, char *cmd_path)
 	return (ms_execute_parent(child, cmd_path, argv));
 }
 
-int	ms_run_external(t_shell *shell, const char *lexeme, int is_child)
+int	ms_run_external(t_shell *sh, int is_child)
 {
 	t_redir_list	*list;
 	char			*cmd_path;
 	int				error_code;
 	int				exit_status;
 
-	if (ms_redir_epilogue(shell, &list, is_child) == EXIT_FAILURE)
+	if (ms_redir_epilogue(sh, &list, is_child) == EXIT_FAILURE)
 		return (STD_RET_KO);
 	error_code = 0;
-	cmd_path = ms_get_valid_path(shell, lexeme, &error_code);
+	cmd_path = ms_get_valid_path(sh, sh->tokens->head->lexeme, &error_code);
 	if (!cmd_path)
 	{
 		if (is_child)
-			ms_free_childres(shell);
+			ms_free_childres(sh);
 		return (error_code);
 	}
-	exit_status = ms_execute_cmd(shell, cmd_path);
+	exit_status = ms_execute_cmd(sh, cmd_path);
 	ms_free_redirs(&list);
 	if (is_child)
-		ms_free_childres(shell);
+		ms_free_childres(sh);
 	return (exit_status);
 }

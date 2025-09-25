@@ -25,7 +25,8 @@ int	ms_free_redirs(t_redir_list **list)
 			free((*list)->redirs[i].filename);
 		i ++;
 	}
-	free((*list)->redirs);
+	if ((*list)->length && (*list)->redirs)
+		free((*list)->redirs);
 	free(*list);
 	*list = NULL;
 	return (STD_RET_KO);

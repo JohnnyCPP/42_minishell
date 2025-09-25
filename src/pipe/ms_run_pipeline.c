@@ -56,14 +56,9 @@ static	void	ms_run_children(t_shell *shell, int i, int *prev, int *next)
 	}
 	ms_delete_tokens(&shell->tokens);
 	shell->tokens = shell->pipeline->commands[i];
-	if (ms_is_redirtoken(shell->tokens->head))
-	{
-		ms_free_childres(shell);
-		exit(STD_RET_OK);
-	}
 	if (ms_is_builtin(shell->tokens->head->lexeme))
-		exit(ms_run_builtin(shell, shell->tokens->head->lexeme, TRUE));
-	exit(ms_run_external(shell, shell->tokens->head->lexeme, TRUE));
+		exit(ms_run_builtin(shell, TRUE));
+	exit(ms_run_external(shell, TRUE));
 }
 
 int	ms_new_pipe(int i, int *next, t_pipeline *pipeline, pid_t **children)

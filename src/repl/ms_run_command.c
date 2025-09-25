@@ -17,7 +17,7 @@ void	ms_run_command(t_shell *shell)
 
 	lexeme = shell->tokens->head->lexeme;
 	if (ms_is_builtin(lexeme))
-		shell->exit_code = ms_run_builtin(shell, lexeme, FALSE);
+		shell->exit_code = ms_run_builtin(shell, FALSE);
 	else
-		shell->exit_code = ms_run_external(shell, lexeme, FALSE);
+		shell->exit_code = ms_run_external(shell, FALSE);
 }
