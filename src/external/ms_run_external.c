@@ -66,9 +66,13 @@ int	ms_run_external(t_shell *sh, int is_child)
 	if (ms_redir_epilogue(sh, &list, is_child) == EXIT_FAILURE)
 		return (STD_RET_KO);
 	error_code = 0;
-	cmd_path = ms_get_valid_path(sh, sh->tokens->head->lexeme, &error_code);
+	if (sh->tokens->head && sh->tokens->head->lexeme)
+		cmd_path = ms_get_valid_path(sh, sh->tokens->head->lexeme, &error_code);
+	else
+		cmd_path = NULL;
 	if (!cmd_path)
 	{
+		ms_free_redirs(&list);
 		if (is_child)
 			ms_free_childres(sh);
 		return (error_code);

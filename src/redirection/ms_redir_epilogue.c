@@ -14,7 +14,7 @@
 int	ms_redir_epilogue(t_shell *shell, t_redir_list **list, int is_child)
 {
 	*list = ms_get_redirs(shell);
-	if (!list)
+	if (!*list)
 	{
 		if (is_child)
 			ms_free_childres(shell);
