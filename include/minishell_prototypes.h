@@ -513,22 +513,37 @@ void	ms_init_resources(t_shell *shell, char **env, char *cmd);
   * @brief Prints an error message when a path is not found.
   *
   * @param cmd The rightmost part of a path.
+  *
+  * @return Always STD_RET_NOTFOUND.
   */
-void	ms_not_found(const char *cmd);
+int		ms_file_not_found(const char *cmd);
+
+/**
+  * @brief Prints an error message when a command is not found.
+  *
+  * @param cmd The rightmost part of a path.
+  *
+  * @return Always STD_RET_NOTFOUND.
+  */
+int		ms_cmd_notfound(const char *cmd);
 
 /**
   * @brief Prints an error message when a resource can't be executed.
   *
   * @param cmd The rightmost part of a path.
+  *
+  * @return Always STD_RET_CANTEXEC.
   */
-void	ms_permission_denied(const char *cmd);
+int		ms_permission_denied(const char *cmd);
 
 /**
   * @brief Prints an error message when a path is a directory.
   *
   * @param cmd The rightmost part of a path.
+  *
+  * @return Always STD_RET_CANTEXEC.
   */
-void	ms_is_a_directory(const char *cmd);
+int		ms_is_a_directory(const char *cmd);
 
 /**
   * @brief Checks if a path is valid for execution.

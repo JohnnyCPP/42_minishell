@@ -14,25 +14,20 @@
 int	ms_is_path_valid(char *cmd_path, const char *lexeme)
 {
 	struct stat	stats;
+	int			exists;
 	int			is_directory;
 	int			is_executable;
 
 	if (!cmd_path)
-	{
-		ms_not_found(lexeme);
-		return (STD_RET_NOTFOUND);
-	}
+		return (ms_cmd_notfound(lexeme));
+	exists = !stat(cmd_path, &stats);
+	if (!exists)
+		return (ms_file_not_found(lexeme));
 	is_directory = !stat(cmd_path, &stats) && S_ISDIR(stats.st_mode);
 	is_executable = !access(cmd_path, X_OK);
 	if (is_directory)
-	{
-		ms_is_a_directory(lexeme);
-		return (STD_RET_CANTEXEC);
-	}
+		return (ms_is_a_directory(lexeme));
 	if (!is_executable)
-	{
-		ms_permission_denied(lexeme);
-		return (STD_RET_CANTEXEC);
-	}
+		return (ms_permission_denied(lexeme));
 	return (STD_RET_OK);
 }

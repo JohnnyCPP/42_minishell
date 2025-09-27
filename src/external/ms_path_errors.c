@@ -11,29 +11,42 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-void	ms_not_found(const char *cmd)
+int	ms_cmd_notfound(const char *cmd)
+{
+	char	*error;
+
+	error = ms_concat(ERR_CMD_NOTFOUND_HEAD, cmd, ERR_CMD_NOTFOUND_TAIL);
+	ms_puterr(error);
+	free(error);
+	return (STD_RET_NOTFOUND);
+}
+
+int	ms_file_not_found(const char *cmd)
 {
 	char	*error;
 
 	error = ms_concat(ERR_EXECVE_HEAD, cmd, ERR_EXECVE_TAIL);
 	ms_puterr(error);
 	free(error);
+	return (STD_RET_NOTFOUND);
 }
 
-void	ms_is_a_directory(const char *cmd)
+int	ms_is_a_directory(const char *cmd)
 {
 	char	*error;
 
 	error = ms_concat(ERR_EXECVE_HEAD, cmd, ERR_IS_DIRECTORY);
 	ms_puterr(error);
 	free(error);
+	return (STD_RET_CANTEXEC);
 }
 
-void	ms_permission_denied(const char *cmd)
+int	ms_permission_denied(const char *cmd)
 {
 	char	*error;
 
 	error = ms_concat(ERR_EXECVE_HEAD, cmd, ERR_PERM_DENIED);
 	ms_puterr(error);
 	free(error);
+	return (STD_RET_CANTEXEC);
 }

@@ -28,6 +28,8 @@
 # define ERR_EXIT_ARGS "Error: exit: too many arguments\n"
 # define ERR_EXIT_NUMARG_HEAD "Error: exit: "
 # define ERR_EXIT_NUMARG_TAIL ": numeric argument required\n"
+# define ERR_CMD_NOTFOUND_HEAD "Error: " 
+# define ERR_CMD_NOTFOUND_TAIL ": command not found\n"
 
 // application errors (perror)
 # define ERR_SIGINT "signal (SIGINT)"
