@@ -11,9 +11,52 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
+static	void	ms_numarg_required_error(const char *arg)
+{
+	char	*error;
+
+	write(STDOUT_FILENO, MSG_EXIT_SHELL, ft_strlen(MSG_EXIT_SHELL));
+	error = ms_concat(ERR_EXIT_NUMARG_HEAD, arg, ERR_EXIT_NUMARG_TAIL);
+	ms_puterr(error);
+	free(error);
+}
+
+static	int	ms_is_number(const char *arg)
+{
+	while (*arg)
+	{
+		if (!ft_isdigit(*arg))
+			return (FALSE);
+		arg ++;
+	}
+	return (TRUE);
+}
+
 int	ms_exit(t_shell *shell)
 {
+	unsigned int	exit_status;
+	char			*arg;
+
+	if (shell->tokens->length > EXIT_TOKEN_LIMIT)
+	{
+		ms_puterr(ERR_EXIT_ARGS);
+		return (STD_RET_INCORRECT);
+	}
+	exit_status = STD_RET_OK;
+	if (shell->tokens->length > 1)
+	{
+		arg = shell->tokens->head->next->lexeme;
+		if (!ms_is_number(arg))
+		{
+			ms_numarg_required_error(arg);
+			return (STD_RET_INCORRECT);
+		}
+		else if (ft_ioverflow(arg))
+			exit_status = STD_RET_INCORRECT;
+		else
+			exit_status = (unsigned int) ft_atoi(arg);
+	}
 	ms_free_resources(shell);
-	exit(STD_RET_OK);
-	return (STD_RET_OK);
+	exit(exit_status);
+	return (exit_status);
 }

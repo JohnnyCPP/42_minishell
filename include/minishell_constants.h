@@ -25,6 +25,9 @@
 # define ERR_EXECVE_TAIL ": no such file or directory\n"
 # define ERR_PERM_DENIED ": permission denied\n"
 # define ERR_IS_DIRECTORY ": is a directory\n"
+# define ERR_EXIT_ARGS "Error: exit: too many arguments\n"
+# define ERR_EXIT_NUMARG_HEAD "Error: exit: "
+# define ERR_EXIT_NUMARG_TAIL ": numeric argument required\n"
 
 // application errors (perror)
 # define ERR_SIGINT "signal (SIGINT)"
@@ -34,7 +37,7 @@
 # define ERR_WAITPID "waitpid"
 # define ERR_PIPE "pipe"
 
-// notifies the user of a successful termination
+// notifies the user that exit() was executed
 # define MSG_EXIT_SHELL "exit\n"
 
 // notifies the user about invalid tokens
@@ -143,5 +146,8 @@
 
 // used by ms_redir_errors() when a syntax error occurs
 # define DEFAULT_LEXEME "newline"
+
+// used by exit to validate args amount
+# define EXIT_TOKEN_LIMIT 2
 
 #endif
