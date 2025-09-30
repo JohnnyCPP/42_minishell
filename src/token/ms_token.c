@@ -6,7 +6,7 @@
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:05:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/04/29 23:05:34 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/09/30 09:46:32 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -62,7 +62,7 @@ void	ms_free_tokens(t_token_list *tokens)
 	t_token	*current;
 	t_token	*next;
 
-	if (!tokens)
+	if (!tokens || !tokens->head)
 		return ;
 	current = tokens->head;
 	while (current)

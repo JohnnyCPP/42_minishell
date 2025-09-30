@@ -128,6 +128,7 @@ EXT_SRC_FILES	= ms_get_path.c \
 				  ms_run_external.c \
 				  ms_to_argv.c
 HIST_SRC_FILES	= ms_add_history.c \
+				  ms_free_history.c \
 				  ms_get_history_path.c \
 				  ms_init_history.c \
 				  ms_load_history.c \

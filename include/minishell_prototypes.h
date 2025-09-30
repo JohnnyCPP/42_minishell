@@ -473,6 +473,13 @@ char	*ms_get_history_path(t_shell *shell);
 void	ms_load_history(t_shell *shell);
 
 /**
+  * @brief Frees memory allocated to history.
+  *
+  * @param shell The shell environment.
+  */
+void	ms_free_history(t_shell *shell);
+
+/**
   * @brief Saves history to a file, creating it if needed.
   *
   * @param shell The shell environment.

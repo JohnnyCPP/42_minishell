@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_free_resources.c                                :+:      :+:    :+:   */
+/*   ms_free_history.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
@@ -11,12 +11,17 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-void	ms_free_resources(t_shell *shell)
+void	ms_free_history(t_shell *shell)
 {
-	printf(MSG_EXIT_SHELL);
-	ms_save_history(shell);
-	ms_free_history(shell);
-	rl_clear_history();
-	ms_free_env(shell);
-	ms_delete_tokens(&shell->tokens);
+	int	i;
+
+	if (!shell->history)
+		return ;
+	i = 0;
+	while (shell->history[i])
+	{
+		free(shell->history[i]);
+		i ++;
+	}
+	free(shell->history);
 }

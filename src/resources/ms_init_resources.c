@@ -6,7 +6,7 @@
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:05:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/04/29 23:05:34 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/09/30 09:54:20 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
@@ -17,4 +17,5 @@ void	ms_init_resources(t_shell *shell, char **env, char *cmd)
 	ms_set_var(shell, EVAR_SHELL, cmd);
 	ms_init_history(shell);
 	ms_load_history(shell);
+	shell->tokens = NULL;
 }
