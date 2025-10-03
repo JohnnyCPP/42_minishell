@@ -13,6 +13,16 @@
 
 void	ms_free_childres(t_shell *shell)
 {
+	if (shell->child_stdin != NO_FILE_DESCRIPTOR)
+	{
+		close(shell->child_stdin);
+		shell->child_stdin = NO_FILE_DESCRIPTOR;
+	}
+	if (shell->child_stdout != NO_FILE_DESCRIPTOR)
+	{
+		close(shell->child_stdout);
+		shell->child_stdout = NO_FILE_DESCRIPTOR;
+	}
 	ms_free_env(shell);
 	ms_delete_tokens(&shell->tokens);
 }

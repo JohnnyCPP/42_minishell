@@ -11,28 +11,27 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-static	void	ms_handle_heredoc_sigint(int signal)
+void	ms_restore_oldhndlr(struct sigaction *old, int *in, int *out)
 {
-	ms_set_signal(signal);
+	sigaction(SIGINT, old, NULL);
+	rl_event_hook = NULL;
+	rl_done = READLINE_NOT_FINISHED;
+	dup2(*in, STDIN_FILENO);
+	dup2(*out, STDOUT_FILENO);
+	close(*in);
+	close(*out);
+	*in = NO_FILE_DESCRIPTOR;
+	*out = NO_FILE_DESCRIPTOR;
 }
 
-static	int	ms_heredoc_event_hook(void)
+void	ms_save_oldhndlr(struct sigaction *sa, int *i, int *o, t_redir_list *l)
 {
-	if (ms_get_signal() == SIGINT)
-		rl_done = READLINE_FINISHED;
-	return (EXIT_SUCCESS);
-}
-
-static	void	ms_set_heredoc_handler(void)
-{
-	struct sigaction	new_sigint;
-
-	new_sigint.sa_handler = ms_handle_heredoc_sigint;
-	sigemptyset(&new_sigint.sa_mask);
-	new_sigint.sa_flags = 0;
-	sigaction(SIGINT, &new_sigint, NULL);
-	ms_set_signal(SIGNAL_RESET);
-	rl_event_hook = ms_heredoc_event_hook;
+	sigaction(SIGINT, NULL, sa);
+	ms_set_heredoc_handler();
+	*i = dup(STDIN_FILENO);
+	*o = dup(STDOUT_FILENO);
+	dup2(l->stdin, STDIN_FILENO);
+	dup2(l->stdout, STDOUT_FILENO);
 }
 
 static	int	ms_parse_heredoc_line(char *line, char *delimiter, int *pipe)
@@ -55,25 +54,26 @@ static	int	ms_parse_heredoc_line(char *line, char *delimiter, int *pipe)
 	return (HEREDOC_CONTINUE);
 }
 
-int	ms_heredoc(char *delimiter)
+int	ms_heredoc(t_redir_list *list, char *delimiter)
 {
 	struct sigaction	old_sigint;
 	char				*line;
 	int					pipe_fd[PIPE_FD_AMOUNT];
+	int					old_stdin;
+	int					old_stdout;
 
 	if (pipe(pipe_fd) == FAIL)
 		return (EXIT_FAILURE);
-	sigaction(SIGINT, NULL, &old_sigint);
-	ms_set_heredoc_handler();
+	old_stdin = NO_FILE_DESCRIPTOR;
+	old_stdout = NO_FILE_DESCRIPTOR;
+	ms_save_oldhndlr(&old_sigint, &old_stdin, &old_stdout, list);
 	while (ms_get_signal() == SIGNAL_RESET)
 	{
 		line = readline(HEREDOC_PROMPT);
 		if (ms_parse_heredoc_line(line, delimiter, pipe_fd) == HEREDOC_END)
 			break ;
 	}
-	sigaction(SIGINT, &old_sigint, NULL);
-	rl_event_hook = NULL;
-	rl_done = READLINE_NOT_FINISHED;
+	ms_restore_oldhndlr(&old_sigint, &old_stdin, &old_stdout);
 	close(pipe_fd[PIPE_WRITE_END]);
 	return (pipe_fd[PIPE_READ_END]);
 }

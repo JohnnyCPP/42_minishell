@@ -37,22 +37,6 @@ typedef struct s_token_list
 	int		length;
 }	t_token_list;
 
-typedef struct s_pipeline
-{
-	t_token_list	**commands;
-	int				length;
-}	t_pipeline;
-
-typedef struct s_shell
-{
-	int				exit_code;
-	char			*input;
-	char			**env;
-	char			**history;
-	t_token_list	*tokens;
-	t_pipeline		*pipeline;
-}	t_shell;
-
 typedef struct s_redir
 {
 	t_token_type	type;
@@ -66,5 +50,23 @@ typedef struct s_redir_list
 	int		stdin;
 	int		stdout;
 }	t_redir_list;
+
+typedef struct s_pipeline
+{
+	t_token_list	**commands;
+	int				length;
+}	t_pipeline;
+
+typedef struct s_shell
+{
+	int				exit_code;
+	int				child_stdin;
+	int				child_stdout;
+	char			*input;
+	char			**env;
+	char			**history;
+	t_token_list	*tokens;
+	t_pipeline		*pipeline;
+}	t_shell;
 
 #endif

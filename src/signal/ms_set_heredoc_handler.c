@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_redir_epilogue.c                                :+:      :+:    :+:   */
+/*   ms_set_heredoc_handler.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:05:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/08/22 17:16:55 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/04/29 23:05:34 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-int	ms_redir_epilogue(t_shell *shell, t_redir_list **list, int is_child)
+static	void	ms_handle_heredoc_sigint(int signal)
 {
-	*list = ms_get_redirs(shell);
-	if (!*list)
-	{
-		if (is_child)
-			ms_free_childres(shell);
-		return (EXIT_FAILURE);
-	}
-	if (ms_apply_redirs(shell, *list, is_child) == EXIT_FAILURE)
-	{
-		if (is_child)
-			ms_free_childres(shell);
-		ms_free_redirs(list);
-		return (EXIT_FAILURE);
-	}
+	ms_set_signal(signal);
+}
+
+static	int	ms_heredoc_event_hook(void)
+{
+	if (ms_get_signal() == SIGINT)
+		rl_done = READLINE_FINISHED;
 	return (EXIT_SUCCESS);
+}
+
+void	ms_set_heredoc_handler(void)
+{
+	struct sigaction	new_sigint;
+
+	new_sigint.sa_handler = ms_handle_heredoc_sigint;
+	sigemptyset(&new_sigint.sa_mask);
+	new_sigint.sa_flags = 0;
+	sigaction(SIGINT, &new_sigint, NULL);
+	ms_set_signal(SIGNAL_RESET);
+	rl_event_hook = ms_heredoc_event_hook;
 }

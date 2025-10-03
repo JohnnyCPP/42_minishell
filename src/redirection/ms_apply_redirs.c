@@ -11,11 +11,11 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-static	int	ms_apply_heredoc(t_redir *redir)
+static	int	ms_apply_heredoc(t_redir_list *list, t_redir *redir)
 {
 	int	heredoc_fd;
 
-	heredoc_fd = ms_heredoc(redir->filename);
+	heredoc_fd = ms_heredoc(list, redir->filename);
 	if (heredoc_fd == FAIL)
 		return (EXIT_FAILURE);
 	dup2(heredoc_fd, STDIN_FILENO);
@@ -74,14 +74,13 @@ static	int	ms_apply_in(t_redir *redir)
 	return (EXIT_SUCCESS);
 }
 
-int	ms_apply_redirs(t_redir_list *list)
+int	ms_apply_redirs(t_shell *shell, t_redir_list *list, int is_child)
 {
 	t_redir	*current;
 	int		status;
 	int		i;
 
-	list->stdin = dup(STDIN_FILENO);
-	list->stdout = dup(STDOUT_FILENO);
+	ms_save_original_fds(shell, list, is_child);
 	status = EXIT_SUCCESS;
 	i = 0;
 	while (i < list->length)
@@ -94,7 +93,7 @@ int	ms_apply_redirs(t_redir_list *list)
 		else if (current->type == T_REDIR_APND)
 			status = ms_apply_apnd(current);
 		else if (current->type == T_HEREDOC)
-			status = ms_apply_heredoc(current);
+			status = ms_apply_heredoc(list, current);
 		i ++;
 		if (status == EXIT_FAILURE)
 			return (EXIT_FAILURE);

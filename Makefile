@@ -144,6 +144,7 @@ PIPE_SRC_FILES	= ms_count_pipes.c \
 				  ms_has_pipe.c \
 				  ms_is_pipesyntax_valid.c \
 				  ms_pipeline.c \
+				  ms_run_children.c \
 				  ms_run_pipeline.c
 REDIR_SRC_FILES	= ms_apply_redirs.c \
 				  ms_free_redirs.c \
@@ -152,14 +153,16 @@ REDIR_SRC_FILES	= ms_apply_redirs.c \
 				  ms_recalc_tail.c \
 				  ms_redir_epilogue.c \
 				  ms_redir_errors.c \
-				  ms_revert_redirs.c
+				  ms_revert_redirs.c \
+				  ms_save_original_fds.c
 REPL_SRC_FILES	= ms_evaluate.c \
 				  ms_read_loop.c \
 				  ms_run_command.c
 RESRC_SRC_FILES	= ms_free_resources.c \
 				  ms_init_resources.c
 SGNAL_SRC_FILES	= ms_configure_signals.c \
-				  ms_g_signal.c
+				  ms_g_signal.c \
+				  ms_set_heredoc_handler.c
 STR_SRC_FILES	= ms_concat.c \
 				  ms_free_strings.c \
 				  ms_get_prompt.c \

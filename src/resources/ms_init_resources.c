@@ -18,4 +18,6 @@ void	ms_init_resources(t_shell *shell, char **env, char *cmd)
 	ms_init_history(shell);
 	ms_load_history(shell);
 	shell->tokens = NULL;
+	shell->child_stdin = NO_FILE_DESCRIPTOR;
+	shell->child_stdout = NO_FILE_DESCRIPTOR;
 }

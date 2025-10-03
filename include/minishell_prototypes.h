@@ -589,22 +589,25 @@ void	ms_recalc_tail(t_shell *shell);
 /**
   * @brief Reads user input until a line with only "delimiter".
   *
+  * @param list The list of redirections.
   * @param delimiter A string that determines the end of user input.
   * 
   * @return A file descriptor to the content read from the user.
   *         Returns EXIT_FAILURE if an error occurs.
   */
-int		ms_heredoc(char *delimiter);
+int		ms_heredoc(t_redir_list *list, char *delimiter);
 
 /**
   * @brief Iterates through a list of redirs, applying them.
   *
+  * @param shell The shell environment.
   * @param list The list of redirs.
+  * @param is_child TRUE or FALSE.
   * 
   * @return EXIT_SUCCESS if redirections are applied,
   *         EXIT_FAILURE if an error occurs.
   */
-int		ms_apply_redirs(t_redir_list *list);
+int		ms_apply_redirs(t_shell *shell, t_redir_list *list, int is_child);
 
 /**
   * @brief Reverts file descriptors from a list of redirs.
@@ -720,5 +723,29 @@ int		ms_redir_epilogue(t_shell *shell, t_redir_list **list, int is_child);
   * @brief Sets a handler that does not redisplay readline.
   */
 void	ms_set_noprompt_handler(void);
+
+/**
+  * @brief Sets the special handler for heredoc.
+  */
+void	ms_set_heredoc_handler(void);
+
+/**
+  * @brief Saves stdin and stdout to be used later when needed.
+  *
+  * @param shell The shell environment.
+  * @param list The list of redirections.
+  * @param is_child TRUE or FALSE.
+  */
+void	ms_save_original_fds(t_shell *shell, t_redir_list *list, int is_child);
+
+/**
+  * @brief Runs a children of a pipeline.
+  *
+  * @param shell The shell environment.
+  * @param i The current children.
+  * @param prev Previous pipe.
+  * @param next Next pipe.
+  */
+void	ms_run_children(t_shell *shell, int i, int *prev, int *next);
 
 #endif

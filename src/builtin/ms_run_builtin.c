@@ -44,7 +44,7 @@ int	ms_run_builtin(t_shell *shell, int is_child)
 			ms_free_childres(shell);
 		return (STD_RET_KO);
 	}
-	if (ms_apply_redirs(list) == EXIT_FAILURE)
+	if (ms_apply_redirs(shell, list, is_child) == EXIT_FAILURE)
 	{
 		if (is_child)
 			ms_free_childres(shell);

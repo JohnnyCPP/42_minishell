@@ -41,27 +41,6 @@ void	ms_swap_pipes(int i, t_pipeline *pipeline, int *prev, int *next)
 	}
 }
 
-static	void	ms_run_children(t_shell *shell, int i, int *prev, int *next)
-{
-	if (i > 0)
-	{
-		dup2(prev[PIPE_READ_END], STDIN_FILENO);
-		close(prev[PIPE_READ_END]);
-		close(prev[PIPE_WRITE_END]);
-	}
-	if (i < shell->pipeline->length - 1)
-	{
-		dup2(next[PIPE_WRITE_END], STDOUT_FILENO);
-		close(next[PIPE_READ_END]);
-		close(next[PIPE_WRITE_END]);
-	}
-	ms_delete_tokens(&shell->tokens);
-	shell->tokens = shell->pipeline->commands[i];
-	if (ms_is_builtin(shell->tokens->head->lexeme))
-		exit(ms_run_builtin(shell, TRUE));
-	exit(ms_run_external(shell, TRUE));
-}
-
 int	ms_new_pipe(int i, int *next, t_pipeline *pipeline, pid_t **children)
 {
 	if (i < pipeline->length - 1)
@@ -75,6 +54,15 @@ int	ms_new_pipe(int i, int *next, t_pipeline *pipeline, pid_t **children)
 		}
 	}
 	return (STD_RET_OK);
+}
+
+int	ms_fork_pipes(pid_t *children, int i, t_pipeline *pipeline, int *next)
+{
+	if (ms_new_pipe(i, next, pipeline, &children) == STD_RET_KO)
+		return (EXIT_FAILURE);
+	ms_set_noprompt_handler();
+	children[i] = fork();
+	return (EXIT_SUCCESS);
 }
 
 int	ms_run_pipeline(t_shell *shell, t_pipeline *pipeline)
@@ -93,10 +81,8 @@ int	ms_run_pipeline(t_shell *shell, t_pipeline *pipeline)
 	i = 0;
 	while (i < pipeline->length)
 	{
-		if (ms_new_pipe(i, pipe_next, pipeline, &children) == STD_RET_KO)
+		if (ms_fork_pipes(children, i, pipeline, pipe_next) == EXIT_FAILURE)
 			return (STD_RET_KO);
-		ms_set_noprompt_handler();
-		children[i] = fork();
 		if (children[i] == PROC_CHILD)
 			ms_run_children(shell, i, pipe_prev, pipe_next);
 		ms_swap_pipes(i, pipeline, pipe_prev, pipe_next);
