@@ -24,14 +24,14 @@ void	ms_restore_oldhndlr(struct sigaction *old, int *in, int *out)
 	*out = NO_FILE_DESCRIPTOR;
 }
 
-void	ms_save_oldhndlr(struct sigaction *sa, int *i, int *o, t_redir_list *l)
+void	ms_save_oldhndlr(struct sigaction *sa, int *i, int *o, t_stdio stdio)
 {
 	sigaction(SIGINT, NULL, sa);
 	ms_set_heredoc_handler();
 	*i = dup(STDIN_FILENO);
 	*o = dup(STDOUT_FILENO);
-	dup2(l->stdin, STDIN_FILENO);
-	dup2(l->stdout, STDOUT_FILENO);
+	dup2(stdio.stdin, STDIN_FILENO);
+	dup2(stdio.stdout, STDOUT_FILENO);
 }
 
 static	int	ms_parse_heredoc_line(char *line, char *delimiter, int *pipe)
@@ -54,7 +54,7 @@ static	int	ms_parse_heredoc_line(char *line, char *delimiter, int *pipe)
 	return (HEREDOC_CONTINUE);
 }
 
-int	ms_heredoc(t_redir_list *list, char *delimiter)
+int	ms_heredoc(char *delimiter, t_stdio stdio)
 {
 	struct sigaction	old_sigint;
 	char				*line;
@@ -63,10 +63,10 @@ int	ms_heredoc(t_redir_list *list, char *delimiter)
 	int					old_stdout;
 
 	if (pipe(pipe_fd) == FAIL)
-		return (EXIT_FAILURE);
+		return (NO_FILE_DESCRIPTOR);
 	old_stdin = NO_FILE_DESCRIPTOR;
 	old_stdout = NO_FILE_DESCRIPTOR;
-	ms_save_oldhndlr(&old_sigint, &old_stdin, &old_stdout, list);
+	ms_save_oldhndlr(&old_sigint, &old_stdin, &old_stdout, stdio);
 	while (ms_get_signal() == SIGNAL_RESET)
 	{
 		line = readline(HEREDOC_PROMPT);

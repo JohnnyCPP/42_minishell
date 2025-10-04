@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_run_children.c                                  :+:      :+:    :+:   */
+/*   ms_free_heredoc_lists.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
@@ -11,27 +11,37 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-void	ms_run_children(t_shell *shell, int i, int *prev, int *next)
+static	void	ms_free_heredocs(t_heredoc_list *list)
 {
-	shell->child_stdin = dup(STDIN_FILENO);
-	shell->child_stdout = dup(STDOUT_FILENO);
-	if (i > 0)
+	int	heredoc;
+
+	if (!list)
+		return ;
+	heredoc = 0;
+	while (heredoc < list->length)
 	{
-		dup2(prev[PIPE_READ_END], STDIN_FILENO);
-		close(prev[PIPE_READ_END]);
-		close(prev[PIPE_WRITE_END]);
+		free(list->heredocs[heredoc].delimiter);
+		list->heredocs[heredoc].delimiter = NULL;
+		close(list->heredocs[heredoc].fd);
+		heredoc ++;
 	}
-	if (i < shell->pipeline->length - 1)
+	if (list->heredocs)
+		free(list->heredocs);
+	list->heredocs = NULL;
+}
+
+void	ms_free_heredoc_lists(t_shell *shell)
+{
+	int	len;
+	int	list;
+
+	len = shell->pipeline->length;
+	list = 0;
+	while (list < len)
 	{
-		dup2(next[PIPE_WRITE_END], STDOUT_FILENO);
-		close(next[PIPE_READ_END]);
-		close(next[PIPE_WRITE_END]);
+		ms_free_heredocs(&shell->pipeline->hdoc_lists[list]);
+		list ++;
 	}
-	ms_delete_tokens(&shell->tokens);
-	shell->tokens = shell->pipeline->commands[i];
-	shell->hdoc_list = &shell->pipeline->hdoc_lists[i];
-	shell->curr_hdoc = 0;
-	if (ms_is_builtin(shell->tokens->head->lexeme))
-		exit(ms_run_builtin(shell, TRUE));
-	exit(ms_run_external(shell, TRUE));
+	free(shell->pipeline->hdoc_lists);
+	shell->pipeline->hdoc_lists = NULL;
 }

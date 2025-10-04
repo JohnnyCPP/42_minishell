@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_run_children.c                                  :+:      :+:    :+:   */
+/*   ms_count_heredocs.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
@@ -11,27 +11,23 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-void	ms_run_children(t_shell *shell, int i, int *prev, int *next)
+int	ms_count_heredocs(t_token_list *list)
 {
-	shell->child_stdin = dup(STDIN_FILENO);
-	shell->child_stdout = dup(STDOUT_FILENO);
-	if (i > 0)
+	t_token	*current;
+	int		heredocs;
+	int		i;
+
+	if (!list || !list->head)
+		return (0);
+	current = list->head;
+	heredocs = 0;
+	i = 0;
+	while (i < list->length && current)
 	{
-		dup2(prev[PIPE_READ_END], STDIN_FILENO);
-		close(prev[PIPE_READ_END]);
-		close(prev[PIPE_WRITE_END]);
+		if (current->type == T_HEREDOC)
+			heredocs ++;
+		i ++;
+		current = current->next;
 	}
-	if (i < shell->pipeline->length - 1)
-	{
-		dup2(next[PIPE_WRITE_END], STDOUT_FILENO);
-		close(next[PIPE_READ_END]);
-		close(next[PIPE_WRITE_END]);
-	}
-	ms_delete_tokens(&shell->tokens);
-	shell->tokens = shell->pipeline->commands[i];
-	shell->hdoc_list = &shell->pipeline->hdoc_lists[i];
-	shell->curr_hdoc = 0;
-	if (ms_is_builtin(shell->tokens->head->lexeme))
-		exit(ms_run_builtin(shell, TRUE));
-	exit(ms_run_external(shell, TRUE));
+	return (heredocs);
 }

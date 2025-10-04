@@ -20,4 +20,7 @@ void	ms_init_resources(t_shell *shell, char **env, char *cmd)
 	shell->tokens = NULL;
 	shell->child_stdin = NO_FILE_DESCRIPTOR;
 	shell->child_stdout = NO_FILE_DESCRIPTOR;
+	shell->pipeline = NULL;
+	shell->hdoc_list = NULL;
+	shell->curr_hdoc = 0;
 }

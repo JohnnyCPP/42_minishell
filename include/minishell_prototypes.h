@@ -589,13 +589,13 @@ void	ms_recalc_tail(t_shell *shell);
 /**
   * @brief Reads user input until a line with only "delimiter".
   *
-  * @param list The list of redirections.
   * @param delimiter A string that determines the end of user input.
+  * @param stdio The original data streams.
   * 
   * @return A file descriptor to the content read from the user.
   *         Returns EXIT_FAILURE if an error occurs.
   */
-int		ms_heredoc(t_redir_list *list, char *delimiter);
+int		ms_heredoc(char *delimiter, t_stdio stdio);
 
 /**
   * @brief Iterates through a list of redirs, applying them.
@@ -747,5 +747,52 @@ void	ms_save_original_fds(t_shell *shell, t_redir_list *list, int is_child);
   * @param next Next pipe.
   */
 void	ms_run_children(t_shell *shell, int i, int *prev, int *next);
+
+/**
+  * @brief Gets the amount of heredocs in a list of tokens.
+  *
+  * @param list The list of tokens.
+  *
+  * @return The amount of heredocs.
+  */
+int		ms_count_heredocs(t_token_list *list);
+
+/**
+  * @brief Gets a list of heredocs from a command.
+  *
+  * @param cmd The command.
+  * @param hdoc The list of heredocs.
+  *
+  * @return TRUE if the list of heredocs is processed successfully, 
+  *         FALSE if an error occurs.
+  */
+int		ms_to_heredocs(t_token_list *cmd, t_heredoc_list *hdoc);
+
+/**
+  * @brief Allocates memory for lists of heredocs.
+  *
+  * @param shell The shell environment.
+  *
+  * @return EXIT_SUCCESS if memory is allocated, 
+  *         EXIT_FAILURE if a memory allocation error occurs.
+  */
+int		ms_allocate_heredoc_lists(t_shell *shell);
+
+/**
+  * @brief Frees memory from the lists of heredocs.
+  *
+  * @param shell The shell environment.
+  */
+void	ms_free_heredoc_lists(t_shell *shell);
+
+/**
+  * @brief Preprocesses the lists of heredocs for a pipeline.
+  *
+  * @param shell The shell environment.
+  *
+  * @return EXIT_SUCCESS if the lists are processed successfully, 
+  *         EXIT_FAILURE if an error occurs.
+  */
+int		ms_get_heredocs(t_shell *shell);
 
 #endif

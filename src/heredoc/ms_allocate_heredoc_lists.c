@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_run_children.c                                  :+:      :+:    :+:   */
+/*   ms_allocate_heredoc_lists.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*       tdaroca <tdaroca@student.42madrid.com>   +#+#+#+#+#+   +#+           */
@@ -11,27 +11,13 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-void	ms_run_children(t_shell *shell, int i, int *prev, int *next)
+int	ms_allocate_heredoc_lists(t_shell *shell)
 {
-	shell->child_stdin = dup(STDIN_FILENO);
-	shell->child_stdout = dup(STDOUT_FILENO);
-	if (i > 0)
-	{
-		dup2(prev[PIPE_READ_END], STDIN_FILENO);
-		close(prev[PIPE_READ_END]);
-		close(prev[PIPE_WRITE_END]);
-	}
-	if (i < shell->pipeline->length - 1)
-	{
-		dup2(next[PIPE_WRITE_END], STDOUT_FILENO);
-		close(next[PIPE_READ_END]);
-		close(next[PIPE_WRITE_END]);
-	}
-	ms_delete_tokens(&shell->tokens);
-	shell->tokens = shell->pipeline->commands[i];
-	shell->hdoc_list = &shell->pipeline->hdoc_lists[i];
-	shell->curr_hdoc = 0;
-	if (ms_is_builtin(shell->tokens->head->lexeme))
-		exit(ms_run_builtin(shell, TRUE));
-	exit(ms_run_external(shell, TRUE));
+	int	len;
+
+	len = shell->pipeline->length;
+	shell->pipeline->hdoc_lists = ft_calloc(len, sizeof(t_heredoc_list));
+	if (!shell->pipeline->hdoc_lists)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

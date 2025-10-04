@@ -15,7 +15,11 @@ void	ms_pipeline(t_shell *shell)
 {
 	if (ms_is_pipesyntax_valid(shell) == FALSE)
 		return ;
-	ms_get_pipeline(shell);
+	if (ms_get_pipeline(shell) == EXIT_FAILURE)
+		return ;
+	if (ms_get_heredocs(shell) == EXIT_FAILURE)
+		return ;
 	shell->exit_code = ms_run_pipeline(shell, shell->pipeline);
+	ms_free_heredoc_lists(shell);
 	ms_free_pipeline(&shell->pipeline);
 }

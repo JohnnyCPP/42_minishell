@@ -25,4 +25,9 @@ void	ms_free_childres(t_shell *shell)
 	}
 	ms_free_env(shell);
 	ms_delete_tokens(&shell->tokens);
+	shell->pipeline->commands = NULL;
+	ms_free_heredoc_lists(shell);
+	shell->hdoc_list = NULL;
+	shell->curr_hdoc = 0;
+	ms_free_pipeline(&shell->pipeline);
 }

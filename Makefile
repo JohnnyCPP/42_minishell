@@ -20,6 +20,7 @@ SRC_PATH	    = ./src/
 BUILTIN_PATH	= ${SRC_PATH}builtin/
 ENV_PATH		= ${SRC_PATH}env/
 EXT_PATH		= ${SRC_PATH}external/
+HDOC_PATH		= ${SRC_PATH}heredoc/
 HIST_PATH		= ${SRC_PATH}history/
 LEX_PATH		= ${SRC_PATH}lexical_analysis/
 LIB_PATH		= ${SRC_PATH}lib/
@@ -52,7 +53,7 @@ SANITIZE_FLAGS	= -fsanitize=address
 # "-s" display a summary of the results directly in the terminal
 # "--leak-check=full" enable detailed memory leak detection, and 
 #                     report every possible memory leak
-VALGRIND_FLAGS	= --track-origins=yes -s --leak-check=full --show-leak-kinds=all
+VALGRIND_FLAGS	= --track-origins=yes -s --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all
 # "-I <path>" instructs the compiler where to look for header files
 # "-L <path>" instructs the linker where to look for static (.a) or 
 #             shared (.so) libraries
@@ -127,6 +128,12 @@ EXT_SRC_FILES	= ms_get_path.c \
 				  ms_path_errors.c \
 				  ms_run_external.c \
 				  ms_to_argv.c
+HDOC_SRC_FILES	= ms_allocate_heredoc_lists.c \
+				  ms_count_heredocs.c \
+				  ms_free_heredoc_lists.c \
+				  ms_get_heredocs.c \
+				  ms_heredoc.c \
+				  ms_to_heredocs.c
 HIST_SRC_FILES	= ms_add_history.c \
 				  ms_free_history.c \
 				  ms_get_history_path.c \
@@ -149,7 +156,6 @@ PIPE_SRC_FILES	= ms_count_pipes.c \
 REDIR_SRC_FILES	= ms_apply_redirs.c \
 				  ms_free_redirs.c \
 				  ms_get_redirs.c \
-				  ms_heredoc.c \
 				  ms_recalc_tail.c \
 				  ms_redir_epilogue.c \
 				  ms_redir_errors.c \
@@ -178,6 +184,7 @@ ROOT_SRCS		= $(addprefix ${SRC_PATH}, ${ROOT_SRC_FILES})
 BUILTIN_SRCS	= $(addprefix ${BUILTIN_PATH}, ${BLTIN_SRC_FILES})
 ENV_SRCS		= $(addprefix ${ENV_PATH}, ${ENV_SRC_FILES})
 EXT_SRCS		= $(addprefix ${EXT_PATH}, ${EXT_SRC_FILES})
+HDOC_SRCS		= $(addprefix ${HDOC_PATH}, ${HDOC_SRC_FILES})
 HIST_SRCS		= $(addprefix ${HIST_PATH}, ${HIST_SRC_FILES})
 LEX_SRCS		= $(addprefix ${LEX_PATH}, ${LEX_SRC_FILES})
 PIPE_SRCS		= $(addprefix ${PIPE_PATH}, ${PIPE_SRC_FILES})
@@ -191,6 +198,7 @@ SRC_FILES		= ${ROOT_SRCS} \
 				  ${BUILTIN_SRCS} \
 				  ${ENV_SRCS} \
 				  ${EXT_SRCS} \
+				  ${HDOC_SRCS} \
 				  ${HIST_SRCS} \
 				  ${LEX_SRCS} \
 				  ${PIPE_SRCS} \
@@ -248,16 +256,6 @@ ${FCLEAN}: ${LIB_CLEAN} ${LIB_DELETE} ${CLEAN}
 
 
 ${RE}: ${FCLEAN} ${ALL}
-
-
-#${BONUS}: ${LIBFT_NAME} ${BONUS_OBJECTS}
-#	@if [ ! -e ${NAME} ]; then \
-#		${BONUS_CLIENT}; \
-#		${CC} ${CFLAGS} ${BONUS_OBJECTS} ${LIBFT_NAME} -o ${NAME}; \
-#		echo "The program \"${NAME}\" has been compiled including bonus."; \
-#	else \
-#		echo "The program \"${NAME}\" already exists. Skipping compilation."; \
-#	fi
 
 
 ${CC_SANITIZER}: ${LIBFT_NAME} ${OBJ_FILES}

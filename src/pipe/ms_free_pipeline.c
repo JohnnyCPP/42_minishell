@@ -15,7 +15,7 @@ void	ms_free_pipeline(t_pipeline **pipeline)
 {
 	int	i;
 
-	if (!pipeline || !*pipeline)
+	if (!pipeline || !*pipeline || !(*pipeline)->commands)
 		return ;
 	i = 0;
 	while (i < (*pipeline)->length)
