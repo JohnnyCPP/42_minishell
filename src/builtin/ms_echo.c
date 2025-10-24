@@ -26,8 +26,16 @@ static	void	ms_echo_tokens(t_token *current, int skip_newline)
 
 static	int	ms_is_nlflag(const char *lexeme)
 {
-	if (!ft_strcmp(lexeme, "-n"))
-		return (TRUE);
+	int	i;
+
+	if (lexeme[0] == '-' && lexeme[1] == 'n')
+	{
+		i = 2;
+		while (lexeme[i] && lexeme[i] == 'n')
+			i ++;
+		if (!lexeme[i])
+			return (TRUE);
+	}
 	return (FALSE);
 }
 

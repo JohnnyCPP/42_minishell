@@ -43,7 +43,7 @@ NAME			= minishell
 CC				= cc
 DEBUG_SYMBOLS	= -g3
 # I'm not sure if -std=gnu99 flag is allowed
-CFLAGS			= -Wall -Wextra -Werror ${DEBUG_SYMBOLS}
+CFLAGS			= -Wall -Wextra -Werror
 GDB				= gdb
 # both "-g" or "-g3" flags can be used.
 # "-g3" includes everything included with "-g", but with 

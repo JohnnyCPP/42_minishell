@@ -42,6 +42,9 @@
 // notifies the user that exit() was executed
 # define MSG_EXIT_SHELL "exit\n"
 
+// notifies the user that SIGQUIT was transmitted to a child
+# define MSG_CORE_DUMPED "Quit (core dumped) %s\n"
+
 // notifies the user about invalid tokens
 # define MSG_UNCL_QUOT "minishell: unclosed quotes in token: %s\n"
 

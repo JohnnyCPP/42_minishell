@@ -15,7 +15,6 @@ static	void	ms_numarg_required_error(const char *arg)
 {
 	char	*error;
 
-	write(STDOUT_FILENO, MSG_EXIT_SHELL, ft_strlen(MSG_EXIT_SHELL));
 	error = ms_concat(ERR_EXIT_NUMARG_HEAD, arg, ERR_EXIT_NUMARG_TAIL);
 	ms_puterr(error);
 	free(error);

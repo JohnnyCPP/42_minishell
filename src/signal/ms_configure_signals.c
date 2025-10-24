@@ -18,7 +18,6 @@ static	void	ms_handle_noprompt_sigint(int signal)
 
 void	ms_set_noprompt_handler(void)
 {
-	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
 	if (signal(SIGINT, ms_handle_noprompt_sigint) == SIG_ERR)
 		perror(ERR_SIGINT);

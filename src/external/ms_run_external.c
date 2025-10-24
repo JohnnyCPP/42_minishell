@@ -17,6 +17,8 @@ static	int	ms_execute_parent(pid_t child, char *cmd_path, char **argv)
 
 	waitpid(child, &child_status, WAIT_FOR_CHILD);
 	ms_configure_signals();
+	if (WIFSIGNALED(child_status) && WTERMSIG(child_status) == SIGQUIT)
+		printf(MSG_CORE_DUMPED, argv[0]);
 	free(cmd_path);
 	ms_free_strings(argv);
 	return (WEXITSTATUS(child_status));
@@ -24,6 +26,7 @@ static	int	ms_execute_parent(pid_t child, char *cmd_path, char **argv)
 
 static	int	ms_execute_child(t_shell *shell, char *cmd_path, char **argv)
 {
+	signal(SIGQUIT, SIG_DFL);
 	execve(cmd_path, argv, shell->env);
 	perror(ERR_EXECVE);
 	return (STD_RET_CANTEXEC);
